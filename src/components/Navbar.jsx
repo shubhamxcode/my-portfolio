@@ -45,7 +45,7 @@ export default function Navbar() {
               <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
             </button>
           ))}
-          <a href="/shubham_dev__.pdf" download
+          <a href="/shubham_dev.pdf" download
             className="px-4 py-1.5 text-sm font-semibold text-gray-300 border border-white/20 rounded-full hover:bg-white/10 hover:text-white transition-colors">
             Resume
           </a>
