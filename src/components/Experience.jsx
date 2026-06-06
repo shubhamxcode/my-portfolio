@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,7 +90,8 @@ export default function Experience() {
             {experiences.map((exp, i) => (
               <div key={exp.company} ref={(el) => (itemsRef.current[i] = el)}
                 className={`relative flex flex-col md:flex-row gap-8 ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
-                <div className="md:w-[calc(50%-24px)] glass-card card-hover rounded-2xl p-6">
+                <Parallax translateX={i % 2 === 0 ? [-20, 0] : [20, 0]} opacity={[0.5, 1]} className="md:w-[calc(50%-24px)]">
+                <div className="glass-card card-hover rounded-2xl p-6 h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="text-lg font-bold text-white">{exp.role}</h3>
@@ -113,6 +115,7 @@ export default function Experience() {
                     ))}
                   </div>
                 </div>
+                </Parallax>
 
                 <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-8 z-10">
                   <div className="w-4 h-4 rounded-full bg-white shadow-lg shadow-white/20 ring-4 ring-[#111111]" />

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,8 +29,8 @@ const LinkedInIcon = () => (
 const contactLinks = [
   { label: 'Email',    value: 'shubh.varshneycode@gmail.com',    href: 'mailto:shubh.varshneycode@gmail.com', Icon: EmailIcon },
   { label: 'Phone',    value: '+91 7417426494',                  href: 'tel:+917417426494',                  Icon: PhoneIcon },
-  { label: 'GitHub',   value: 'github.com/shubhamvarshney',      href: 'https://github.com',                 Icon: GitHubIcon },
-  { label: 'LinkedIn', value: 'linkedin.com/in/shubhamvarshney', href: 'https://linkedin.com',               Icon: LinkedInIcon },
+  { label: 'GitHub',   value: 'github.com/shubhamxcode',          href: 'https://github.com/shubhamxcode',                 Icon: GitHubIcon },
+  { label: 'LinkedIn', value: 'linkedin.com/in/shubhamxcode',    href: 'https://www.linkedin.com/in/shubhamxcode/', Icon: LinkedInIcon },
 ];
 
 export default function Contact() {
@@ -69,22 +70,29 @@ export default function Contact() {
     <section ref={sectionRef} id="contact" className="panel relative py-32 bg-[#111111] overflow-hidden" style={{ zIndex: 6 }}>
       <div ref={blob1Ref}  className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
       <div ref={blob2Ref}  className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/3 blur-3xl pointer-events-none" />
-      <div ref={squareRef} className="absolute top-1/3 left-12 w-16 h-16 border-4 border-white/10 rotate-12 pointer-events-none" />
+      <Parallax rotate={[0, 45]} translateY={[-20, 20]} className="absolute top-1/3 left-12 pointer-events-none">
+        <div ref={squareRef} className="w-16 h-16 border-4 border-white/10 rotate-12" />
+      </Parallax>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6">
         <div ref={headingRef} className="text-center mb-16">
           <p className="section-label mb-3">Get In Touch</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">
-            Let's <span className="text-gray-600">Work Together</span>
-          </h2>
+          <Parallax translateY={[20, -10]}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">
+              Let's <span className="text-gray-600">Work Together</span>
+            </h2>
+          </Parallax>
           <p className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed">
             Open to full-time roles, freelance projects, and interesting collaborations. I typically respond within 24 hours.
           </p>
         </div>
 
         <div ref={cardsRef} className="grid sm:grid-cols-2 gap-4 mb-12">
-          {contactLinks.map(({ label, value, href, Icon }) => (
-            <a key={label} href={href}
+          {contactLinks.map(({ label, value, href, Icon }, i) => {
+            const yVals = [[15, -5], [18, -3], [13, -6], [16, -4]];
+            return (
+            <Parallax key={label} translateY={yVals[i]} opacity={[0.7, 1]}>
+            <a href={href}
               target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
               className="glass-card card-hover rounded-2xl p-5 flex items-center gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0"><Icon /></div>
@@ -96,7 +104,9 @@ export default function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-          ))}
+            </Parallax>
+            );
+          })}
         </div>
 
         <div ref={ctaRef} className="glass-card rounded-3xl p-10 text-center border border-white/5">

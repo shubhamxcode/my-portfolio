@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,18 +69,24 @@ export default function Projects() {
       <div ref={blobRef} className="absolute -bottom-20 -left-32 w-[500px] h-[500px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 pt-24 pb-8 max-w-6xl mx-auto px-6">
-        <div ref={headingRef} className="text-center mb-16">
-          <p className="section-label mb-3">What I've Built</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Featured <span className="text-gray-600">Projects</span></h2>
-          <p className="mt-4 text-gray-500 max-w-xl mx-auto">Scroll down to slide through projects →</p>
-        </div>
+        <Parallax translateY={[25, -10]}>
+          <div ref={headingRef} className="text-center mb-16">
+            <p className="section-label mb-3">What I've Built</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Featured <span className="text-gray-600">Projects</span></h2>
+            <p className="mt-4 text-gray-500 max-w-xl mx-auto">Scroll down to slide through projects →</p>
+          </div>
+        </Parallax>
       </div>
 
       <div className="relative z-10 px-6 pb-24 overflow-hidden">
         <div ref={trackRef} className="flex gap-6" style={{ width: 'max-content', perspective: 1000 }}>
-          {projects.map((proj) => (
-            <div key={proj.name}
-              className="flex-shrink-0 w-[360px] md:w-[420px] rounded-3xl overflow-hidden glass-card cursor-pointer"
+          {projects.map((proj, i) => {
+            const yVals = [[30, -5], [35, -3], [28, -7]];
+            const oVals = [[0.6, 1], [0.55, 1], [0.65, 1]];
+            return (
+            <Parallax key={proj.name} translateY={yVals[i]} opacity={oVals[i]} style={{ flexShrink: 0 }}>
+            <div
+              className="w-[360px] md:w-[420px] rounded-3xl overflow-hidden glass-card cursor-pointer"
               onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}
               style={{ transformStyle: 'preserve-3d' }}>
               <div className="h-px w-full bg-white/20" />
@@ -112,7 +119,9 @@ export default function Projects() {
                 </div>
               </div>
             </div>
-          ))}
+            </Parallax>
+            );
+          })}
         </div>
 
         <div className="flex justify-center mt-8 gap-2">

@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const words = ['Full-Stack Engineer', 'React Developer', 'TypeScript Expert', 'Next.js Builder'];
+const words = ['Full-Stack Engineer', 'React Developer', 'Next.js Builder'];
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -70,8 +71,10 @@ export default function Hero() {
       <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
       <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/4 blur-3xl pointer-events-none" />
 
-      <div ref={gridRef} className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <Parallax speed={-15} className="absolute inset-0 pointer-events-none">
+        <div ref={gridRef} className="w-full h-full"
+          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      </Parallax>
 
       <div ref={contentRef} className="relative z-10 max-w-6xl mx-auto px-6 py-32 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-sm font-medium mb-8">
@@ -79,19 +82,29 @@ export default function Hero() {
           Open to opportunities
         </div>
 
-        <h1 ref={nameRef} className="font-black text-6xl md:text-8xl tracking-tight leading-none mb-4">
-          <span className="text-white">Shubham</span><br />
-          <span className="text-gray-500">Varshney</span>
-        </h1>
+        <div ref={nameRef} className="mb-4">
+          <Parallax translateY={[-20, 20]}>
+            <div className="font-black text-6xl md:text-8xl tracking-tight leading-none">
+              <span className="text-white">Shubham</span>
+            </div>
+          </Parallax>
+          <Parallax translateY={[-10, 30]}>
+            <div className="font-black text-6xl md:text-8xl tracking-tight leading-none">
+              <span className="text-gray-500">Varshney</span>
+            </div>
+          </Parallax>
+        </div>
 
         <div ref={tagRef} className="flex items-center justify-center mb-6 text-2xl md:text-3xl font-semibold">
           <span ref={wordRef} className="text-gray-300">{words[0]}</span>
         </div>
 
-        <p ref={descRef} className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mb-10">
-          Full-Stack Software Engineer with 2+ years crafting scalable, production-ready web applications.
-          Passionate about performance, clean APIs, and pixel-perfect UIs.
-        </p>
+        <Parallax translateY={[0, 15]}>
+          <p ref={descRef} className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mb-10">
+            Full-Stack Software Engineer with 2+ years crafting scalable, production-ready web applications.
+            Passionate about performance, clean APIs, and pixel-perfect UIs.
+          </p>
+        </Parallax>
 
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
@@ -106,9 +119,9 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center justify-center gap-6 mt-14">
-          {[{ label: 'GitHub', href: 'https://github.com', icon: 'GH' },
-            { label: 'LinkedIn', href: 'https://linkedin.com', icon: 'IN' },
-            { label: 'Twitter', href: 'https://twitter.com', icon: 'TW' }].map(({ label, href, icon }) => (
+          {[{ label: 'GitHub', href: 'https://github.com/shubhamxcode', icon: 'GH' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shubhamxcode/', icon: 'IN' },
+            { label: 'X', href: 'https://x.com/shubhamXcode', icon: 'X' }].map(({ label, href, icon }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"
               className="group flex items-center gap-2 text-sm text-gray-600 hover:text-white transition-colors duration-200">
               <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs font-bold group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-200">

@@ -6,9 +6,9 @@ export default function Footer() {
           © {new Date().getFullYear()} <span className="font-semibold text-gray-400">Shubham Varshney</span>. All rights reserved.
         </p>
         <div className="flex items-center gap-6">
-          {[{ label: 'GitHub', href: 'https://github.com' },
-            { label: 'LinkedIn', href: 'https://linkedin.com' },
-            { label: 'Twitter', href: 'https://twitter.com' }].map(({ label, href }) => (
+          {[{ label: 'GitHub', href: 'https://github.com/shubhamxcode' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shubhamxcode/' },
+            { label: 'X', href: 'https://x.com/shubhamXcode' }].map(({ label, href }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"
               className="text-sm text-gray-600 hover:text-white transition-colors font-medium">{label}</a>
           ))}

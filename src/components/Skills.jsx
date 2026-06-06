@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,25 +52,33 @@ export default function Skills() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div ref={headingRef} className="text-center mb-16">
-          <p className="section-label mb-3">What I Work With</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Technical <span className="text-gray-600">Skills</span></h2>
-          <p className="mt-4 text-gray-500 max-w-xl mx-auto">A curated stack of tools I've mastered through real-world projects and production experience.</p>
-        </div>
+        <Parallax translateY={[30, -10]}>
+          <div ref={headingRef} className="text-center mb-16">
+            <p className="section-label mb-3">What I Work With</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Technical <span className="text-gray-600">Skills</span></h2>
+            <p className="mt-4 text-gray-500 max-w-xl mx-auto">A curated stack of tools I've mastered through real-world projects and production experience.</p>
+          </div>
+        </Parallax>
 
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {skillGroups.map(({ category, skills }) => (
-            <div key={category} className="card-hover glass-card rounded-2xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <h3 className="font-bold text-gray-200">{category}</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((s) => (
-                  <span key={s} className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 text-gray-400 border border-white/10">{s}</span>
-                ))}
-              </div>
-            </div>
-          ))}
+          {skillGroups.map(({ category, skills }, i) => {
+            const yValues = [[20, -5], [25, -3], [22, -7], [18, -4], [28, -6]];
+            const opacityValues = [[0.7, 1], [0.65, 1], [0.72, 1], [0.68, 1], [0.7, 1]];
+            return (
+              <Parallax key={category} translateY={yValues[i]} opacity={opacityValues[i]}>
+                <div className="card-hover glass-card rounded-2xl p-6 h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <h3 className="font-bold text-gray-200">{category}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((s) => (
+                      <span key={s} className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 text-gray-400 border border-white/10">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              </Parallax>
+            );
+          })}
         </div>
       </div>
     </section>

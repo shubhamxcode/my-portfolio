@@ -34,7 +34,7 @@ export default function Navbar() {
           <img src="/myimage.jpeg" alt="Shubham Varshney"
             className="w-8 h-8 rounded-full object-cover border border-white/20 shrink-0" />
           <span className="text-gray-700">·</span>
-          <span className="text-gray-500 text-sm font-medium">Portfolio</span>
+          <span className="text-gray-500 text-sm font-medium">Shubham</span>
         </button>
 
         <div className="hidden md:flex items-center gap-8">
@@ -45,6 +45,10 @@ export default function Navbar() {
               <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
             </button>
           ))}
+          <a href="/shubham_dev_.pdf" download
+            className="px-4 py-1.5 text-sm font-semibold text-gray-300 border border-white/20 rounded-full hover:bg-white/10 hover:text-white transition-colors">
+            Resume
+          </a>
           <a href="mailto:shubh.varshneycode@gmail.com"
             className="px-4 py-1.5 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">
             Hire Me

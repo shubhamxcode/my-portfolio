@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ParallaxProvider } from 'react-scroll-parallax';
 import './index.css';
+
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -39,7 +41,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <ParallaxProvider>
       {/* Custom cursor — monochrome */}
       <div ref={cursorRef}
         className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border-2 border-gray-800 opacity-50 -translate-x-1/2 -translate-y-1/2 hidden md:block"
@@ -60,6 +62,6 @@ export default function App() {
         <Contact />
         <Footer />
       </main>
-    </>
+    </ParallaxProvider>
   );
 }

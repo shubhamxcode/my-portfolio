@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,15 +48,22 @@ export default function About() {
             <div className="relative w-72 h-72 md:w-80 md:h-80">
               <div className="absolute inset-0 bg-white/5"
                 style={{ borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%', animation: 'morph 8s ease-in-out infinite' }} />
-              <div className="absolute inset-6 rounded-full overflow-hidden border border-white/10">
+              <Parallax translateY={[-10, 10]} className="absolute inset-6 rounded-full overflow-hidden border border-white/10">
                 <img src="/myimage.jpeg" alt="Shubham Varshney" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -top-4 -right-4 px-3 py-1.5 rounded-full bg-white text-black text-xs font-bold shadow-lg">React</div>
-              <div className="absolute -bottom-2 -left-6 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">Node.js</div>
-              <div className="absolute top-1/2 -right-10 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">TypeScript</div>
+              </Parallax>
+              <Parallax translateY={[-25, 5]} className="absolute -top-4 -right-4">
+                <div className="px-3 py-1.5 rounded-full bg-white text-black text-xs font-bold shadow-lg">React</div>
+              </Parallax>
+              <Parallax translateY={[-15, 25]} className="absolute -bottom-2 -left-6">
+                <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">Node.js</div>
+              </Parallax>
+              <Parallax translateY={[10, -20]} className="absolute top-1/2 -right-10">
+                <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">TypeScript</div>
+              </Parallax>
             </div>
           </div>
 
+          <Parallax translateY={[15, -10]}>
           <div ref={textRef}>
             <p className="section-label mb-3">About Me</p>
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
@@ -80,6 +88,7 @@ export default function About() {
               </svg>
             </a>
           </div>
+          </Parallax>
         </div>
       </div>
 
