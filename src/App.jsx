@@ -26,6 +26,8 @@ export default function App() {
     const dot    = cursorDotRef.current;
 
     const moveCursor = (e) => {
+      gsap.set(cursor, { opacity: 0.5 });
+      gsap.set(dot,    { opacity: 1 });
       gsap.to(dot,    { x: e.clientX, y: e.clientY, duration: 0.05, ease: 'none' });
       gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.4,  ease: 'power2.out' });
     };
@@ -44,10 +46,10 @@ export default function App() {
     <ParallaxProvider>
       {/* Custom cursor — monochrome */}
       <div ref={cursorRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border-2 border-gray-800 opacity-50 -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border-2 border-gray-800 opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block"
         style={{ willChange: 'transform' }} />
       <div ref={cursorDotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] w-1.5 h-1.5 rounded-full bg-black -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] w-1.5 h-1.5 rounded-full bg-black opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block"
         style={{ willChange: 'transform' }} />
 
       <Navbar />
