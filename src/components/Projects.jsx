@@ -7,19 +7,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    name: 'PaperX', tagline: 'Paper Trading Platform',
+    name: 'PaperX', tagline: 'Paper Trading Platform', href: 'https://www.paperx.xyz',
     description: 'Paper trading platform for Indian markets with Rs.10L virtual capital and real-time NSE/BSE data via Upstox API. Live candlestick charts with 2-second polling and portfolio tracking.',
     stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM', 'Tailwind CSS'],
     highlights: ['Real-time NSE/BSE data via Upstox API', 'Live candlestick charts with 2s polling', 'Secure auth + portfolio tracking'],
   },
   {
-    name: 'RedCircle', tagline: 'Tokenized Reddit Posts',
+    name: 'RedCircle', tagline: 'Tokenized Reddit Posts', href: 'https://www.redcircle.lol/home',
     description: 'Platform to tokenize Reddit posts as tradable assets. Creators list posts, curators discover and trade. Gamified engagement system with leaderboards and rich profiles.',
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Reddit OAuth 2.0'],
     highlights: ['Tokenize Reddit posts as tradable assets', 'Gamified leaderboards & profiles', 'Reddit OAuth 2.0 integration'],
   },
   {
-    name: 'ReviewIQ', tagline: 'AI-Powered PR Review',
+    name: 'ReviewIQ', tagline: 'AI-Powered PR Review', href: 'https://www.reviewiq.xyz',
     description: 'AI platform that analyzes GitHub Pull Requests with code insights, refactor suggestions, and issue detection. Webhook workflow with vector embeddings for context-aware analysis.',
     stack: ['React', 'TypeScript', 'TanStack Router', 'Node.js', 'Express', 'PostgreSQL', 'Docker', 'AI API'],
     highlights: ['AI code insights & refactor suggestions', 'Webhook + vector embeddings', 'Automated static analysis'],
@@ -73,7 +73,6 @@ export default function Projects() {
           <div ref={headingRef} className="text-center mb-16">
             <p className="section-label mb-3">What I've Built</p>
             <h2 className="text-4xl md:text-5xl font-bold text-white">Featured <span className="text-gray-600">Projects</span></h2>
-            <p className="mt-4 text-gray-500 max-w-xl mx-auto">Scroll down to slide through projects →</p>
           </div>
         </Parallax>
       </div>
@@ -96,7 +95,7 @@ export default function Projects() {
                     <h3 className="text-2xl font-bold text-white">{proj.name}</h3>
                     <p className="text-sm font-semibold mt-1 text-gray-500">{proj.tagline}</p>
                   </div>
-                  <a href="#" onClick={(e) => e.preventDefault()}
+                  <a href={proj.href} target="_blank" rel="noopener noreferrer"
                     className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-gray-500 hover:text-gray-300">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

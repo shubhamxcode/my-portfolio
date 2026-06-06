@@ -69,9 +69,6 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
               Building things for the <span className="text-gray-500">web</span>
             </h2>
-            <p className="text-gray-500 leading-relaxed mb-4">
-              I'm a Full-Stack Software Engineer from Greater Noida, UP, pursuing B.Tech in IT at NIET (AKTU). 2+ years building scalable, production-ready applications.
-            </p>
             <p className="text-gray-500 leading-relaxed mb-6">
               I specialize in React, Next.js, TypeScript, and Node.js — focused on performance optimization, clean API design, and end-to-end feature ownership.
             </p>
