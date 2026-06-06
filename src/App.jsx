@@ -22,6 +22,17 @@ export default function App() {
   const cursorDotRef = useRef(null);
 
   useEffect(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        setTimeout(() => preloader.remove(), 500);
+      }, 800);
+    }
+  }, []);
+
+  useEffect(() => {
     const cursor = cursorRef.current;
     const dot    = cursorDotRef.current;
 

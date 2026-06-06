@@ -14,6 +14,26 @@
     />
   </head>
   <body>
+    <div id="preloader" style="
+      position:fixed;inset:0;background:#0a0a0a;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      z-index:99999;transition:opacity 0.5s ease,visibility 0.5s ease;">
+      <div style="
+        font-family:'Oswald',system-ui,sans-serif;font-size:clamp(2rem,6vw,4rem);
+        font-weight:700;letter-spacing:0.08em;color:#fff;line-height:1;">
+        SV
+      </div>
+      <div style="
+        margin-top:1.5rem;width:40px;height:2px;background:#222;overflow:hidden;border-radius:2px;">
+        <div id="preloader-bar" style="
+          height:100%;width:0%;background:#fff;
+          animation:load 1.2s ease-in-out forwards;">
+        </div>
+      </div>
+      <style>
+        @keyframes load { 0%{width:0%} 60%{width:70%} 100%{width:100%} }
+      </style>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

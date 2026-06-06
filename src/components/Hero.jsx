@@ -7,19 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const words = ['Full-Stack Engineer', 'React Developer', 'Next.js Builder'];
 
-const PARTICLE_COUNT = 80;
-const MAX_DIST       = 140;
-
-function initParticles(w, h) {
-  return Array.from({ length: PARTICLE_COUNT }, () => ({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
-    r: Math.random() * 1.5 + 0.5,
-  }));
-}
-
 export default function Hero() {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
@@ -35,75 +22,6 @@ export default function Hero() {
   const ctaRef     = useRef(null);
   const wordRef    = useRef(null);
   const wordIndex  = useRef(0);
-  const canvasRef  = useRef(null);
-  const mousePos   = useRef({ x: -9999, y: -9999 });
-
-  // Canvas particle animation
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx2d  = canvas.getContext('2d');
-    let particles = [];
-    let raf;
-
-    const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      particles = initParticles(canvas.width, canvas.height);
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const onMouse = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mousePos.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    };
-    window.addEventListener('mousemove', onMouse);
-
-    const draw = () => {
-      const { width: w, height: h } = canvas;
-      ctx2d.clearRect(0, 0, w, h);
-
-      for (const p of particles) {
-        const dx = mousePos.current.x - p.x;
-        const dy = mousePos.current.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) { p.vx += dx * 0.00015; p.vy += dy * 0.00015; }
-        p.vx *= 0.995; p.vy *= 0.995;
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-        ctx2d.beginPath();
-        ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx2d.fillStyle = 'rgba(255,255,255,0.55)';
-        ctx2d.fill();
-      }
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d  = Math.sqrt(dx * dx + dy * dy);
-          if (d < MAX_DIST) {
-            const alpha = (1 - d / MAX_DIST) * 0.18;
-            ctx2d.beginPath();
-            ctx2d.moveTo(particles[i].x, particles[i].y);
-            ctx2d.lineTo(particles[j].x, particles[j].y);
-            ctx2d.strokeStyle = `rgba(255,255,255,${alpha})`;
-            ctx2d.lineWidth = 0.6;
-            ctx2d.stroke();
-          }
-        }
-      }
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', onMouse);
-    };
-  }, []);
 
   // GSAP scroll & intro animations
   useEffect(() => {
@@ -121,6 +39,7 @@ export default function Hero() {
       gsap.to(contentRef.current, { y: -160, scale: 0.9, opacity: 0, ease: 'none', scrollTrigger: st });
 
       // Background ZOOMS IN — the "dive through" effect
+      gsap.set(bgZoomRef.current, { scale: 1 });
       gsap.to(bgZoomRef.current, {
         scale: 2.2,
         ease: 'none',
@@ -166,7 +85,7 @@ export default function Hero() {
       gsap.to(orb3Ref.current, { x: x * 0.9,  duration: 1,   ease: 'power2.out', overwrite: false });
     };
     window.addEventListener('mousemove', onMouse);
-    return () => { clearInterval(interval); window.removeEventListener('mousemove', onMouse); };
+    return () => { ctx.revert(); clearInterval(interval); window.removeEventListener('mousemove', onMouse); };
   }, []);
 
   return (
@@ -174,14 +93,15 @@ export default function Hero() {
 
       {/* Zoomable background layer */}
       <div ref={bgZoomRef} className="absolute inset-0 w-full h-full" style={{ transformOrigin: 'center center', willChange: 'transform' }}>
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+        {/* Dot grid — zooms with the container */}
+        <div ref={gridRef} className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+        {/* Radial glow burst from center — gives zoom a sense of depth */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 70%)' }} />
         <div ref={orb1Ref} className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
-        <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
-        <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/4 blur-3xl pointer-events-none" />
-        <Parallax speed={-15} className="absolute inset-0 pointer-events-none">
-          <div ref={gridRef} className="w-full h-full"
-            style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        </Parallax>
+        <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
+        <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
       </div>
 
       {/* Vignette tunnel overlay — fades in on scroll, darkens edges to simulate zooming into a portal */}
@@ -202,7 +122,7 @@ export default function Hero() {
           Open to opportunities
         </div>
 
-        <div ref={nameRef} className="mb-4">
+        <div ref={nameRef} className="mb-4" style={{ opacity: 0 }}>
           <Parallax translateY={[-20, 20]}>
             <div className="font-black text-6xl md:text-8xl tracking-tight leading-none">
               <span className="text-white">Shubham</span>
@@ -215,18 +135,18 @@ export default function Hero() {
           </Parallax>
         </div>
 
-        <div ref={tagRef} className="flex items-center justify-center mb-6 text-2xl md:text-3xl font-semibold">
+        <div ref={tagRef} className="flex items-center justify-center mb-6 text-2xl md:text-3xl font-semibold" style={{ opacity: 0 }}>
           <span ref={wordRef} className="text-gray-300">{words[0]}</span>
         </div>
 
         <Parallax translateY={[0, 15]}>
-          <p ref={descRef} className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mb-10">
+          <p ref={descRef} className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mb-10" style={{ opacity: 0 }}>
             Full-Stack Software Engineer with 2+ years crafting scalable, production-ready web applications.
             Passionate about performance, clean APIs, and pixel-perfect UIs.
           </p>
         </Parallax>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4" style={{ opacity: 0 }}>
           <button
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             className="px-8 py-3.5 text-sm font-semibold text-black rounded-full bg-white hover:bg-gray-200 shadow-lg shadow-white/10 transition-all duration-300 hover:-translate-y-0.5">
