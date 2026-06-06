@@ -7,6 +7,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const words = ['Full-Stack Engineer', 'React Developer', 'Next.js Builder'];
 
+const PARTICLE_COUNT = 80;
+const MAX_DIST       = 140;
+
+function initParticles(w, h) {
+  return Array.from({ length: PARTICLE_COUNT }, () => ({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 1.5 + 0.5,
+  }));
+}
+
 export default function Hero() {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
@@ -20,6 +33,86 @@ export default function Hero() {
   const ctaRef     = useRef(null);
   const wordRef    = useRef(null);
   const wordIndex  = useRef(0);
+  const canvasRef  = useRef(null);
+  const mousePos   = useRef({ x: -9999, y: -9999 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx2d  = canvas.getContext('2d');
+    let particles = [];
+    let raf;
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      particles = initParticles(canvas.width, canvas.height);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const onMouse = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    window.addEventListener('mousemove', onMouse);
+
+    const draw = () => {
+      const { width: w, height: h } = canvas;
+      ctx2d.clearRect(0, 0, w, h);
+
+      for (const p of particles) {
+        // drift toward mouse slightly
+        const dx = mousePos.current.x - p.x;
+        const dy = mousePos.current.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 200) {
+          p.vx += dx * 0.00015;
+          p.vy += dy * 0.00015;
+        }
+        // dampen
+        p.vx *= 0.995;
+        p.vy *= 0.995;
+
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+
+        ctx2d.beginPath();
+        ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx2d.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx2d.fill();
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < MAX_DIST) {
+            const alpha = (1 - d / MAX_DIST) * 0.18;
+            ctx2d.beginPath();
+            ctx2d.moveTo(particles[i].x, particles[i].y);
+            ctx2d.lineTo(particles[j].x, particles[j].y);
+            ctx2d.strokeStyle = `rgba(255,255,255,${alpha})`;
+            ctx2d.lineWidth = 0.6;
+            ctx2d.stroke();
+          }
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMouse);
+    };
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,6 +160,7 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} id="hero" className="panel relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]" style={{ zIndex: 1 }}>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
       <div ref={orb1Ref} className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
       <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
       <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/4 blur-3xl pointer-events-none" />
