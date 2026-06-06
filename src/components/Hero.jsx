@@ -23,6 +23,8 @@ function initParticles(w, h) {
 export default function Hero() {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
+  const bgZoomRef  = useRef(null);
+  const overlayRef = useRef(null);
   const orb1Ref    = useRef(null);
   const orb2Ref    = useRef(null);
   const orb3Ref    = useRef(null);
@@ -36,6 +38,7 @@ export default function Hero() {
   const canvasRef  = useRef(null);
   const mousePos   = useRef({ x: -9999, y: -9999 });
 
+  // Canvas particle animation
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx2d  = canvas.getContext('2d');
@@ -61,25 +64,14 @@ export default function Hero() {
       ctx2d.clearRect(0, 0, w, h);
 
       for (const p of particles) {
-        // drift toward mouse slightly
         const dx = mousePos.current.x - p.x;
         const dy = mousePos.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) {
-          p.vx += dx * 0.00015;
-          p.vy += dy * 0.00015;
-        }
-        // dampen
-        p.vx *= 0.995;
-        p.vy *= 0.995;
-
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
-
+        if (dist < 200) { p.vx += dx * 0.00015; p.vy += dy * 0.00015; }
+        p.vx *= 0.995; p.vy *= 0.995;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
         ctx2d.beginPath();
         ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx2d.fillStyle = 'rgba(255,255,255,0.55)';
@@ -102,7 +94,6 @@ export default function Hero() {
           }
         }
       }
-
       raf = requestAnimationFrame(draw);
     };
     draw();
@@ -114,29 +105,48 @@ export default function Hero() {
     };
   }, []);
 
+  // GSAP scroll & intro animations
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Intro stagger
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.3 });
       tl.fromTo(nameRef.current, { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2 })
         .fromTo(tagRef.current,  { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.7')
         .fromTo(descRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
         .fromTo(ctaRef.current,  { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, '-=0.4');
 
-      gsap.to(contentRef.current, { y: -180, scale: 0.92, opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
-      gsap.to(orb1Ref.current, { y: -60, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 2.5 } });
-      gsap.to(orb2Ref.current, { y: -120, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1.8 } });
-      gsap.to(orb3Ref.current, { y: -200, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1.0 } });
+      const st = { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 };
+
+      // Content fades out and lifts
+      gsap.to(contentRef.current, { y: -160, scale: 0.9, opacity: 0, ease: 'none', scrollTrigger: st });
+
+      // Background ZOOMS IN — the "dive through" effect
+      gsap.to(bgZoomRef.current, {
+        scale: 2.2,
+        ease: 'none',
+        scrollTrigger: { ...st, scrub: 1.2 },
+      });
+
+      // Vignette tunnel darkens edges as we zoom
+      gsap.to(overlayRef.current, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: { ...st, scrub: 0.8 },
+      });
+
+      // Individual orb parallax
+      gsap.to(orb1Ref.current, { y: -60,  ease: 'none', scrollTrigger: { ...st, scrub: 2.5 } });
+      gsap.to(orb2Ref.current, { y: -120, ease: 'none', scrollTrigger: { ...st, scrub: 1.8 } });
+      gsap.to(orb3Ref.current, { y: -200, ease: 'none', scrollTrigger: { ...st, scrub: 1.0 } });
       gsap.to(gridRef.current, { y: -50, opacity: 0, ease: 'none',
         scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: '70% top', scrub: 1 } });
 
+      // Idle float
       gsap.to(orb1Ref.current, { y: '+=22', duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
       gsap.to(orb2Ref.current, { y: '+=16', duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1 });
     }, sectionRef);
 
+    // Word rotator
     const interval = setInterval(() => {
       wordIndex.current = (wordIndex.current + 1) % words.length;
       gsap.to(wordRef.current, {
@@ -148,11 +158,12 @@ export default function Hero() {
       });
     }, 2500);
 
+    // Mouse parallax on orbs
     const onMouse = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 40;
-      gsap.to(orb1Ref.current, { x: x * 0.5, duration: 1.5, ease: 'power2.out', overwrite: false });
-      gsap.to(orb2Ref.current, { x: -x * 0.4, duration: 2,  ease: 'power2.out', overwrite: false });
-      gsap.to(orb3Ref.current, { x: x * 0.9,  duration: 1,  ease: 'power2.out', overwrite: false });
+      gsap.to(orb1Ref.current, { x: x * 0.5,  duration: 1.5, ease: 'power2.out', overwrite: false });
+      gsap.to(orb2Ref.current, { x: -x * 0.4, duration: 2,   ease: 'power2.out', overwrite: false });
+      gsap.to(orb3Ref.current, { x: x * 0.9,  duration: 1,   ease: 'power2.out', overwrite: false });
     };
     window.addEventListener('mousemove', onMouse);
     return () => { clearInterval(interval); window.removeEventListener('mousemove', onMouse); };
@@ -160,17 +171,32 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} id="hero" className="panel relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]" style={{ zIndex: 1 }}>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
-      <div ref={orb1Ref} className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
-      <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
-      <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/4 blur-3xl pointer-events-none" />
 
-      <Parallax speed={-15} className="absolute inset-0 pointer-events-none">
-        <div ref={gridRef} className="w-full h-full"
-          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      </Parallax>
+      {/* Zoomable background layer */}
+      <div ref={bgZoomRef} className="absolute inset-0 w-full h-full" style={{ transformOrigin: 'center center', willChange: 'transform' }}>
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+        <div ref={orb1Ref} className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
+        <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
+        <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/4 blur-3xl pointer-events-none" />
+        <Parallax speed={-15} className="absolute inset-0 pointer-events-none">
+          <div ref={gridRef} className="w-full h-full"
+            style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        </Parallax>
+      </div>
 
-      <div ref={contentRef} className="relative z-10 max-w-6xl mx-auto px-6 py-32 text-center">
+      {/* Vignette tunnel overlay — fades in on scroll, darkens edges to simulate zooming into a portal */}
+      <div
+        ref={overlayRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          opacity: 0,
+          background: 'radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.97) 100%)',
+          zIndex: 2,
+        }}
+      />
+
+      {/* Hero content */}
+      <div ref={contentRef} className="relative max-w-6xl mx-auto px-6 py-32 text-center" style={{ zIndex: 3 }}>
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-sm font-medium mb-8">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           Open to opportunities
@@ -227,7 +253,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600" style={{ zIndex: 3 }}>
         <span className="text-xs tracking-widest uppercase font-medium">Scroll</span>
         <div className="w-px h-12 bg-gradient-to-b from-gray-500 to-transparent animate-pulse" />
       </div>
