@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import './index.css';
 
-
+import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,6 +14,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingShapes from './components/FloatingShapes';
+import BigMarquee from './components/BigMarquee';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,16 +22,58 @@ export default function App() {
   const cursorRef    = useRef(null);
   const cursorDotRef = useRef(null);
   const progressRef  = useRef(null);
+  const [loaded, setLoaded] = useState(false);
 
   // Scroll progress bar
   useEffect(() => {
+    if (!loaded) return;
     const tween = gsap.to(progressRef.current, {
       scaleX: 1,
       ease: 'none',
       scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
     });
     return () => tween.scrollTrigger?.kill();
-  }, []);
+  }, [loaded]);
+
+  // Char-split heading reveals — wraps [data-split] text once, animates on scroll
+  useEffect(() => {
+    if (!loaded) return;
+    window.scrollTo(0, 0);
+    ScrollTrigger.refresh();
+
+    const triggers = [];
+    document.querySelectorAll('[data-split]').forEach((el) => {
+      if (!el.dataset.splitDone) {
+        el.dataset.splitDone = 'true';
+        const wrap = (node) => {
+          [...node.childNodes].forEach((child) => {
+            if (child.nodeType === Node.TEXT_NODE) {
+              const frag = document.createDocumentFragment();
+              child.textContent.split('').forEach((ch) => {
+                const s = document.createElement('span');
+                s.className = 'split-char';
+                s.textContent = ch === ' ' ? ' ' : ch;
+                frag.appendChild(s);
+              });
+              node.replaceChild(frag, child);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+              wrap(child);
+            }
+          });
+        };
+        wrap(el);
+      }
+      const chars = el.querySelectorAll('.split-char');
+      gsap.set(chars, { yPercent: 110, opacity: 0 });
+      triggers.push(ScrollTrigger.create({
+        trigger: el, start: 'top 88%', once: true,
+        onEnter: () => gsap.to(chars, {
+          yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.022, ease: 'power4.out',
+        }),
+      }));
+    });
+    return () => triggers.forEach((t) => t.kill());
+  }, [loaded]);
 
   // Card spotlight + magnetic buttons — one delegated listener for both
   useEffect(() => {
@@ -65,65 +108,73 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-        setTimeout(() => preloader.remove(), 500);
-      }, 800);
-    }
-  }, []);
-
+  // Custom cursor — delegated hover detection so late-mounted elements work too
   useEffect(() => {
     const cursor = cursorRef.current;
     const dot    = cursorDotRef.current;
 
     const moveCursor = (e) => {
-      gsap.set(cursor, { opacity: 0.5 });
+      gsap.set(cursor, { opacity: 1 });
       gsap.set(dot,    { opacity: 1 });
       gsap.to(dot,    { x: e.clientX, y: e.clientY, duration: 0.05, ease: 'none' });
       gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.4,  ease: 'power2.out' });
     };
-    const grow   = () => gsap.to(cursor, { scale: 2.5, opacity: 0.3, duration: 0.3 });
-    const shrink = () => gsap.to(cursor, { scale: 1,   opacity: 0.5, duration: 0.3 });
+    const isInteractive = (t) => t.closest?.('a, button, [data-magnetic]');
+    const onOver = (e) => { if (isInteractive(e.target)) gsap.to(cursor, { scale: 2.4, duration: 0.3 }); };
+    const onOut  = (e) => {
+      if (isInteractive(e.target) && !(e.relatedTarget && isInteractive(e.relatedTarget))) {
+        gsap.to(cursor, { scale: 1, duration: 0.3 });
+      }
+    };
 
     window.addEventListener('mousemove', moveCursor);
-    document.querySelectorAll('a, button').forEach((el) => {
-      el.addEventListener('mouseenter', grow);
-      el.addEventListener('mouseleave', shrink);
-    });
-    return () => window.removeEventListener('mousemove', moveCursor);
+    document.addEventListener('mouseover', onOver);
+    document.addEventListener('mouseout', onOut);
+    return () => {
+      window.removeEventListener('mousemove', moveCursor);
+      document.removeEventListener('mouseover', onOver);
+      document.removeEventListener('mouseout', onOut);
+    };
   }, []);
 
   return (
     <ParallaxProvider>
+      {!loaded && <Preloader onDone={() => setLoaded(true)} />}
+
+      {/* Film grain */}
+      <div className="noise-overlay" />
+
       {/* Scroll progress bar */}
       <div ref={progressRef}
         className="fixed top-0 left-0 right-0 z-[10000] h-0.5 bg-gradient-to-r from-white/80 to-white/40 origin-left"
         style={{ transform: 'scaleX(0)' }} />
 
-      {/* Custom cursor — monochrome */}
+      {/* Custom cursor — inverts whatever it passes over */}
       <div ref={cursorRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border-2 border-gray-800 opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border border-white opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block mix-blend-difference"
         style={{ willChange: 'transform' }} />
       <div ref={cursorDotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] w-1.5 h-1.5 rounded-full bg-black opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] w-1.5 h-1.5 rounded-full bg-white opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block mix-blend-difference"
         style={{ willChange: 'transform' }} />
 
-      <Navbar />
-      <FloatingShapes />
+      {loaded && (
+        <>
+          <Navbar />
+          <FloatingShapes />
 
-      <main className="stack-sections">
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Contact />
-        <Footer />
-      </main>
+          <main className="stack-sections">
+            <Hero />
+            <About />
+            <BigMarquee top="FULL-STACK ENGINEER" bottom="AI BUILDER" zIndex={2} />
+            <Skills />
+            <Experience />
+            <Projects />
+            <BigMarquee top="GOT AN IDEA?" bottom="LET'S SHIP IT" zIndex={5} />
+            <Contact />
+            <Footer />
+          </main>
+        </>
+      )}
     </ParallaxProvider>
   );
 }

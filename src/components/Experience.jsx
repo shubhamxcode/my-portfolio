@@ -80,7 +80,7 @@ export default function Experience() {
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="section-label mb-3">Where I've Worked</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Work <span className="text-gray-600">Experience</span></h2>
+          <h2 data-split className="text-4xl md:text-5xl font-bold text-white">Work <span className="text-gray-600">Experience</span></h2>
         </div>
 
         <div className="relative">

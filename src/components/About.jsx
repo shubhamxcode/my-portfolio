@@ -5,6 +5,13 @@ import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const stats = [
+  { value: 2,  suffix: '+', label: 'Years Experience' },
+  { value: 10, suffix: '+', label: 'Projects Built' },
+  { value: 3,  suffix: '',  label: 'Companies' },
+  { value: 5,  suffix: '',  label: 'Languages' },
+];
+
 export default function About() {
   const sectionRef = useRef(null);
   const innerRef   = useRef(null);
@@ -13,9 +20,20 @@ export default function About() {
   const dotsRef    = useRef(null);
   const avatarRef  = useRef(null);
   const textRef    = useRef(null);
+  const statsRef   = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Count-up stats
+      statsRef.current.querySelectorAll('[data-count]').forEach((el) => {
+        const target = parseInt(el.dataset.count, 10);
+        const obj = { v: 0 };
+        gsap.to(obj, {
+          v: target, duration: 1.6, ease: 'power2.out',
+          scrollTrigger: { trigger: statsRef.current, start: 'top 85%' },
+          onUpdate: () => { el.textContent = Math.round(obj.v); },
+        });
+      });
       gsap.to(blobRef.current, { y: -100, ease: 'none',
         scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 2 } });
       gsap.to(ringRef.current, { y: -150, rotation: 60, ease: 'none',
@@ -66,12 +84,22 @@ export default function About() {
           <Parallax translateY={[15, -10]}>
           <div ref={textRef}>
             <p className="section-label mb-3">About Me</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+            <h2 data-split className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
               Building things for the <span className="text-gray-500">web</span>
             </h2>
             <p className="text-gray-500 leading-relaxed mb-6">
               I specialize in React, Next.js, TypeScript, and Node.js — focused on performance optimization, clean API design, and end-to-end feature ownership, with hands-on experience shipping AI-powered products and autonomous agents.
             </p>
+            <div ref={statsRef} className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+              {stats.map(({ value, suffix, label }) => (
+                <div key={label}>
+                  <p className="display text-4xl md:text-5xl text-white leading-none">
+                    <span data-count={value}>0</span><span className="text-gray-500">{suffix}</span>
+                  </p>
+                  <p className="mt-1 text-[10px] tracking-[0.2em] uppercase text-gray-600 font-semibold">{label}</p>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-wrap gap-2 mb-8">
               {['React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Docker'].map((t) => (
                 <span key={t} className="px-3 py-1 rounded-full text-xs font-semibold bg-white/5 text-gray-300 border border-white/10">{t}</span>

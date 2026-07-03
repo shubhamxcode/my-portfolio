@@ -95,6 +95,63 @@
     color: #666666;
     display: block;
   }
+
+  /* Hollow display text — award-site staple */
+  .outline-text {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+    color: transparent;
+  }
+
+  /* Outline that floods solid on hover */
+  .fill-hover {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
+    color: transparent;
+    transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1), -webkit-text-stroke-color 0.5s;
+  }
+  .fill-hover:hover {
+    color: #ffffff;
+    -webkit-text-stroke-color: #ffffff;
+  }
+
+  /* Char-split heading reveal targets (wrapped at runtime in App.jsx) */
+  .split-char {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  /* Film grain — pure SVG turbulence, no canvas */
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Rotating circular badge */
+  .spin-slow { animation: spin-slow 18s linear infinite; }
+
+  /* Project cover art patterns — monochrome, one signature per project */
+  .cover-rings {
+    background:
+      repeating-radial-gradient(circle at 70% 45%, rgba(255,255,255,0.10) 0 1px, transparent 1px 34px);
+  }
+  .cover-bars {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.09) 0 2px, transparent 2px 26px),
+      linear-gradient(180deg, transparent 30%, rgba(255,255,255,0.04));
+  }
+  .cover-grid {
+    background:
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  .cover-dots {
+    background-image: radial-gradient(rgba(255,255,255,0.14) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+  }
 }
 
 /* ── Stacked panel system ─────────────────────────────────────────── */
@@ -119,8 +176,19 @@
   to { transform: translateX(-50%); }
 }
 
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0a0a0a;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .text-shimmer { animation: none; }
   .marquee-track { animation: none; }
   .glass-card::after { display: none; }
+  .spin-slow { animation: none; }
+  .noise-overlay { display: none; }
 }

@@ -78,7 +78,7 @@ export default function Contact() {
         <div ref={headingRef} className="text-center mb-16">
           <p className="section-label mb-3">Get In Touch</p>
           <Parallax translateY={[20, -10]}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">
+            <h2 data-split className="text-4xl md:text-5xl font-bold text-white mb-5">
               Let's <span className="text-gray-600">Work Together</span>
             </h2>
           </Parallax>

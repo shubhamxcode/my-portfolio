@@ -62,7 +62,7 @@ export default function Skills() {
         <Parallax translateY={[30, -10]}>
           <div ref={headingRef} className="text-center mb-16">
             <p className="section-label mb-3">What I Work With</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white">Technical <span className="text-gray-600">Skills</span></h2>
+            <h2 data-split className="text-4xl md:text-5xl font-bold text-white">Technical <span className="text-gray-600">Skills</span></h2>
             <p className="mt-4 text-gray-500 max-w-xl mx-auto">A curated stack of tools I've mastered through real-world projects and production experience.</p>
           </div>
         </Parallax>

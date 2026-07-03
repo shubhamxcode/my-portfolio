@@ -206,6 +206,25 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Rotating circular badge */}
+      <div className="absolute bottom-12 right-10 hidden lg:block" style={{ zIndex: 3 }}>
+        <div className="relative w-28 h-28">
+          <svg viewBox="0 0 100 100" className="w-full h-full spin-slow">
+            <defs>
+              <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+            </defs>
+            <text fontSize="8.2" fill="rgba(255,255,255,0.45)" letterSpacing="1.8" fontFamily="Oswald, sans-serif">
+              <textPath href="#badge-circle">OPEN TO WORK • FULL-STACK • AI AGENTS •</textPath>
+            </text>
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600" style={{ zIndex: 3 }}>
         <span className="text-xs tracking-widest uppercase font-medium">Scroll</span>
         <div className="w-px h-12 bg-gradient-to-b from-gray-500 to-transparent animate-pulse" />
