@@ -5,7 +5,20 @@ import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const words = ['Full-Stack Engineer', 'React Developer', 'Next.js Builder'];
+const words = ['Full-Stack Engineer', 'React Developer', 'Next.js Builder', 'AI Agent Builder'];
+const SCRAMBLE_CHARS = '!<>-_\\/[]{}=+*^?#';
+
+// Star positions as box-shadows — computed once per page load, rendered as 3 depth layers
+const genStars = (n) =>
+  Array.from({ length: n }, () =>
+    `${(Math.random() * 100).toFixed(1)}vw ${(Math.random() * 100).toFixed(1)}vh rgba(255,255,255,${(0.3 + Math.random() * 0.7).toFixed(2)})`
+  ).join(', ');
+
+const STAR_LAYERS = [
+  { shadows: genStars(70), size: 1,   duration: '3s' },
+  { shadows: genStars(45), size: 1.5, duration: '5s' },
+  { shadows: genStars(25), size: 2,   duration: '7s' },
+];
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -65,17 +78,27 @@ export default function Hero() {
       gsap.to(orb2Ref.current, { y: '+=16', duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1 });
     }, sectionRef);
 
-    // Word rotator
+    // Word rotator — scramble/decode effect
+    let scrambleId = null;
     const interval = setInterval(() => {
       wordIndex.current = (wordIndex.current + 1) % words.length;
-      gsap.to(wordRef.current, {
-        y: -20, opacity: 0, duration: 0.3, ease: 'power2.in',
-        onComplete: () => {
-          if (wordRef.current) wordRef.current.textContent = words[wordIndex.current];
-          gsap.fromTo(wordRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
-        },
-      });
-    }, 2500);
+      const next = words[wordIndex.current];
+      const totalFrames = 18;
+      let frame = 0;
+      clearInterval(scrambleId);
+      scrambleId = setInterval(() => {
+        frame++;
+        if (!wordRef.current || frame >= totalFrames) {
+          if (wordRef.current) wordRef.current.textContent = next;
+          clearInterval(scrambleId);
+          return;
+        }
+        const revealed = Math.floor((frame / totalFrames) * next.length);
+        wordRef.current.textContent = next.split('').map((c, i) =>
+          c === ' ' ? ' ' : i < revealed ? c : SCRAMBLE_CHARS[(Math.random() * SCRAMBLE_CHARS.length) | 0]
+        ).join('');
+      }, 35);
+    }, 3000);
 
     // Mouse parallax on orbs
     const onMouse = (e) => {
@@ -85,7 +108,7 @@ export default function Hero() {
       gsap.to(orb3Ref.current, { x: x * 0.9,  duration: 1,   ease: 'power2.out', overwrite: false });
     };
     window.addEventListener('mousemove', onMouse);
-    return () => { ctx.revert(); clearInterval(interval); window.removeEventListener('mousemove', onMouse); };
+    return () => { ctx.revert(); clearInterval(interval); clearInterval(scrambleId); window.removeEventListener('mousemove', onMouse); };
   }, []);
 
   return (
@@ -93,6 +116,11 @@ export default function Hero() {
 
       {/* Zoomable background layer */}
       <div ref={bgZoomRef} className="absolute inset-0 w-full h-full" style={{ transformOrigin: 'center center', willChange: 'transform' }}>
+        {/* Starfield — 3 depth layers, twinkle at different rates, zoom with the dive */}
+        {STAR_LAYERS.map((layer, i) => (
+          <div key={i} className="star-layer"
+            style={{ width: layer.size, height: layer.size, boxShadow: layer.shadows, animationDuration: layer.duration }} />
+        ))}
         {/* Dot grid — zooms with the container */}
         <div ref={gridRef} className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)', backgroundSize: '36px 36px' }} />
@@ -103,6 +131,11 @@ export default function Hero() {
         <div ref={orb2Ref} className="absolute bottom-1/3 -right-32 w-[450px] h-[450px] rounded-full bg-white/5 blur-3xl pointer-events-none" />
         <div ref={orb3Ref} className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
       </div>
+
+      {/* Shooting stars — streak across at staggered intervals */}
+      <div className="shooting-star" style={{ top: '15%', left: '70%', animationDelay: '2s' }} />
+      <div className="shooting-star" style={{ top: '8%',  left: '45%', animationDelay: '7s',  animationDuration: '11s' }} />
+      <div className="shooting-star" style={{ top: '32%', left: '88%', animationDelay: '13s', animationDuration: '14s' }} />
 
       {/* Vignette tunnel overlay — fades in on scroll, darkens edges to simulate zooming into a portal */}
       <div
@@ -125,7 +158,7 @@ export default function Hero() {
         <div ref={nameRef} className="mb-4" style={{ opacity: 0 }}>
           <Parallax translateY={[-20, 20]}>
             <div className="font-black text-6xl md:text-8xl tracking-tight leading-none">
-              <span className="text-white">Shubham</span>
+              <span className="text-shimmer">Shubham</span>
             </div>
           </Parallax>
           <Parallax translateY={[-10, 30]}>
@@ -141,19 +174,19 @@ export default function Hero() {
 
         <Parallax translateY={[0, 15]}>
           <p ref={descRef} className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mb-10" style={{ opacity: 0 }}>
-            Full-Stack Software Engineer with 2+ years crafting scalable, production-ready web applications.
-            Passionate about performance, clean APIs, and pixel-perfect UIs.
+            Full-Stack Software Engineer with 2+ years crafting scalable, production-ready web applications —
+            with hands-on experience shipping AI-powered products and autonomous agents.
           </p>
         </Parallax>
 
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4" style={{ opacity: 0 }}>
-          <button
+          <button data-magnetic
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-3.5 text-sm font-semibold text-black rounded-full bg-white hover:bg-gray-200 shadow-lg shadow-white/10 transition-all duration-300 hover:-translate-y-0.5">
+            className="px-8 py-3.5 text-sm font-semibold text-black rounded-full bg-white hover:bg-gray-200 shadow-lg shadow-white/10 transition-colors duration-300">
             View My Work
           </button>
-          <a href="mailto:shubh.varshneycode@gmail.com"
-            className="px-8 py-3.5 text-sm font-semibold text-white rounded-full border border-white/20 hover:border-white/50 hover:bg-white/5 transition-all duration-300">
+          <a data-magnetic href="mailto:shubh.varshneycode@gmail.com"
+            className="px-8 py-3.5 text-sm font-semibold text-white rounded-full border border-white/20 hover:border-white/50 hover:bg-white/5 transition-colors duration-300">
             Get In Touch
           </a>
         </div>

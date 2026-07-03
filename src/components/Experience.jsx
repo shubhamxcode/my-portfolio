@@ -7,27 +7,27 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: 'Full Stack Developer', company: 'AdsFlicker',
+    role: 'Full Stack Developer', company: 'RedCircle',
     period: 'Apr 2025 – Apr 2026', type: 'Full-time · Remote',
+    points: [
+      'Built a platform to tokenize Reddit and X posts as tradable SPL tokens on Solana, enabling creators to list posts and curators to discover and trade them.',
+      'Developed the full stack including React/Next.js frontend, Node.js/Express backend, PostgreSQL database, and Solana/Anchor smart contracts.',
+      'Implemented a gamified engagement system with leaderboards, rich profiles, and performance metrics.',
+    ],
+    stack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Solana/Anchor'],
+  },
+  {
+    role: 'Full Stack Intern', company: 'AdsFlicker',
+    period: 'Oct 2024 – Mar 2025', type: 'Intern · Remote',
     points: [
       'Developed and optimized core features for AdsFlicker\'s advertising platform, enabling advertisers and publishers to manage campaigns using modern web technologies.',
       'Built scalable full-stack modules for campaign management, tracking, and reporting supporting ad models such as CPA, CPC, and CPM.',
-      'Designed responsive dashboards and dynamic UI components to monitor traffic, conversions, and campaign performance in real time.',
+      'Integrated AI-powered campaign insights — auto-generated ad copy suggestions and plain-language performance summaries from real-time traffic and conversion data.',
     ],
     stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL'],
   },
   {
-    role: 'Full Stack Intern', company: 'InfiniSync',
-    period: 'Oct 2024 – Mar 2025', type: 'Intern · Remote',
-    points: [
-      'Built full-stack features using React, TypeScript, and Node.js, integrating RESTful APIs and managing end-to-end data flow.',
-      'Designed and implemented backend API endpoints and database schemas, collaborating with the team to deliver scalable features.',
-      'Improved performance by optimizing state management, refactoring UI components, and implementing real-time features using WebSockets.',
-    ],
-    stack: ['React', 'TypeScript', 'Node.js', 'WebSockets'],
-  },
-  {
-    role: 'Full Stack Developer', company: 'AshnaAI',
+    role: 'Full Stack Intern', company: 'AshnaAI',
     period: 'Apr 2024 – Sep 2024', type: 'Internship · Remote',
     points: [
       'Developed AshnaAI\'s AI-powered platform using Next.js, TypeScript, and Tailwind CSS with focus on performance and responsiveness.',
@@ -126,21 +126,6 @@ export default function Experience() {
           </div>
         </div>
 
-        <div className="mt-20 glass-card rounded-2xl p-8 border border-white/5">
-          <div className="flex items-start gap-5">
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
-              <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m-4-3.5l4 2 4-2" />
-              </svg>
-            </div>
-            <div>
-              <p className="section-label mb-1">Education</p>
-              <h3 className="text-xl font-bold text-white">Noida Institute of Engineering and Technology (AKTU)</h3>
-              <p className="text-gray-500 mt-1">Bachelor of Technology in Information Technology</p>
-              <p className="text-sm text-gray-400 font-medium mt-1">Oct 2023 – Jul 2027 · Greater Noida, UP</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

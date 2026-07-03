@@ -20,6 +20,50 @@ gsap.registerPlugin(ScrollTrigger);
 export default function App() {
   const cursorRef    = useRef(null);
   const cursorDotRef = useRef(null);
+  const progressRef  = useRef(null);
+
+  // Scroll progress bar
+  useEffect(() => {
+    const tween = gsap.to(progressRef.current, {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+    });
+    return () => tween.scrollTrigger?.kill();
+  }, []);
+
+  // Card spotlight + magnetic buttons — one delegated listener for both
+  useEffect(() => {
+    const onMove = (e) => {
+      const card = e.target.closest?.('.glass-card');
+      if (card) {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      }
+      const mag = e.target.closest?.('[data-magnetic]');
+      if (mag) {
+        const r = mag.getBoundingClientRect();
+        gsap.to(mag, {
+          x: (e.clientX - r.left - r.width / 2) * 0.35,
+          y: (e.clientY - r.top - r.height / 2) * 0.35,
+          duration: 0.3, ease: 'power2.out',
+        });
+      }
+    };
+    const onOut = (e) => {
+      const mag = e.target.closest?.('[data-magnetic]');
+      if (mag && !mag.contains(e.relatedTarget)) {
+        gsap.to(mag, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+      }
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseout', onOut);
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseout', onOut);
+    };
+  }, []);
 
   useEffect(() => {
     const preloader = document.getElementById('preloader');
@@ -55,6 +99,11 @@ export default function App() {
 
   return (
     <ParallaxProvider>
+      {/* Scroll progress bar */}
+      <div ref={progressRef}
+        className="fixed top-0 left-0 right-0 z-[10000] h-0.5 bg-gradient-to-r from-white/80 to-white/40 origin-left"
+        style={{ transform: 'scaleX(0)' }} />
+
       {/* Custom cursor — monochrome */}
       <div ref={cursorRef}
         className="pointer-events-none fixed top-0 left-0 z-[9999] w-8 h-8 rounded-full border-2 border-gray-800 opacity-0 -translate-x-1/2 -translate-y-1/2 hidden md:block"

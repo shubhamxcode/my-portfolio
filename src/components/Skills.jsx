@@ -5,11 +5,18 @@ import { Parallax } from 'react-scroll-parallax';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const tickerSkills = [
+  'React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'MongoDB',
+  'GraphQL', 'Tailwind CSS', 'Docker', 'AWS', 'Rust', 'Python', 'Swift',
+  'WebSockets', 'Express.js', 'Redis', 'Supabase', 'Redux', 'LLM Agents', 'CI/CD',
+];
+
 const skillGroups = [
-  { category: 'Languages',      skills: ['JavaScript', 'TypeScript', 'Rust', 'Java'] },
+  { category: 'Languages',      skills: ['JavaScript', 'TypeScript', 'Rust', 'Python', 'Swift'] },
   { category: 'Frontend',       skills: ['React', 'Next.js', 'Redux', 'RTK Query', 'TanStack Query', 'Tailwind CSS', 'HTML/CSS'] },
   { category: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'RESTful APIs', 'GraphQL', 'WebSockets'] },
-  { category: 'Databases',      skills: ['PostgreSQL', 'MongoDB', 'Supabase', 'Drizzle ORM'] },
+  { category: 'AI',             skills: ['LLM Integration (Gemini)', 'Agents & Browser Automation', 'Vision AI', 'Whisper STT', 'Vector Embeddings'] },
+  { category: 'Databases',      skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Supabase', 'SQLite'] },
   { category: 'Cloud & DevOps', skills: ['AWS', 'Docker', 'Git', 'GitHub Actions', 'CI/CD'] },
 ];
 
@@ -62,10 +69,10 @@ export default function Skills() {
 
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {skillGroups.map(({ category, skills }, i) => {
-            const yValues = [[20, -5], [25, -3], [22, -7], [18, -4], [28, -6]];
-            const opacityValues = [[0.7, 1], [0.65, 1], [0.72, 1], [0.68, 1], [0.7, 1]];
+            const yValues = [[20, -5], [25, -3], [22, -7], [18, -4], [28, -6], [24, -5]];
+            const opacityValues = [[0.7, 1], [0.65, 1], [0.72, 1], [0.68, 1], [0.7, 1], [0.66, 1]];
             return (
-              <Parallax key={category} translateY={yValues[i]} opacity={opacityValues[i]}>
+              <Parallax key={category} translateY={yValues[i % yValues.length]} opacity={opacityValues[i % opacityValues.length]}>
                 <div className="card-hover glass-card rounded-2xl p-6 h-full">
                   <div className="flex items-center gap-3 mb-4">
                     <h3 className="font-bold text-gray-200">{category}</h3>
@@ -79,6 +86,18 @@ export default function Skills() {
               </Parallax>
             );
           })}
+        </div>
+
+        {/* Infinite skill ticker — pure CSS, pauses on hover */}
+        <div className="marquee mt-16">
+          <div className="marquee-track">
+            {[...tickerSkills, ...tickerSkills].map((s, i) => (
+              <span key={i} className="flex items-center gap-4 whitespace-nowrap text-sm font-semibold text-gray-600">
+                {s}
+                <span className="w-1 h-1 rounded-full bg-white/20" />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

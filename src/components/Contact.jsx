@@ -112,8 +112,8 @@ export default function Contact() {
         <div ref={ctaRef} className="glass-card rounded-3xl p-10 text-center border border-white/5">
           <h3 className="text-2xl font-bold text-white mb-2">Open to Opportunities</h3>
           <p className="text-gray-500 mb-6 max-w-sm mx-auto">Whether it's a full-time role or an exciting side project, I'd love to hear about it.</p>
-          <a href="mailto:shubh.varshneycode@gmail.com"
-            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-bold text-black rounded-full bg-white hover:bg-gray-200 shadow-lg shadow-white/10 transition-all duration-300 hover:-translate-y-0.5">
+          <a data-magnetic href="mailto:shubh.varshneycode@gmail.com"
+            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-bold text-black rounded-full bg-white hover:bg-gray-200 shadow-lg shadow-white/10 transition-colors duration-300">
             Say Hello
           </a>
         </div>

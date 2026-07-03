@@ -70,7 +70,7 @@ export default function About() {
               Building things for the <span className="text-gray-500">web</span>
             </h2>
             <p className="text-gray-500 leading-relaxed mb-6">
-              I specialize in React, Next.js, TypeScript, and Node.js — focused on performance optimization, clean API design, and end-to-end feature ownership.
+              I specialize in React, Next.js, TypeScript, and Node.js — focused on performance optimization, clean API design, and end-to-end feature ownership, with hands-on experience shipping AI-powered products and autonomous agents.
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               {['React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Docker'].map((t) => (

@@ -7,16 +7,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    name: 'PaperX', tagline: 'Paper Trading Platform', href: 'https://www.paperx.xyz',
-    description: 'Paper trading platform for Indian markets with Rs.10L virtual capital and real-time NSE/BSE data via Upstox API. Live candlestick charts with 2-second polling and portfolio tracking.',
-    stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM', 'Tailwind CSS'],
-    highlights: ['Real-time NSE/BSE data via Upstox API', 'Live candlestick charts with 2s polling', 'Secure auth + portfolio tracking'],
+    name: 'Souji', tagline: 'JARVIS-Style AI Assistant for macOS', href: 'https://github.com/shubhamxcode',
+    description: 'AI assistant for macOS with voice control, an LLM brain, screen vision, and natural-language Mac automation backed by local-first memory. Includes an autonomous job-application agent shipped as a Chrome extension.',
+    stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
+    highlights: ['Voice control + LLM brain + screen vision', 'Autonomous job-application agent that ranks jobs & auto-applies', 'Natural-language Mac automation with local-first memory'],
   },
   {
-    name: 'RedCircle', tagline: 'Tokenized Reddit Posts', href: 'https://www.redcircle.lol/home',
-    description: 'Platform to tokenize Reddit posts as tradable assets. Creators list posts, curators discover and trade. Gamified engagement system with leaderboards and rich profiles.',
-    stack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Reddit OAuth 2.0'],
-    highlights: ['Tokenize Reddit posts as tradable assets', 'Gamified leaderboards & profiles', 'Reddit OAuth 2.0 integration'],
+    name: 'PaperX', tagline: 'Paper Trading Platform', href: 'https://www.paperx.xyz',
+    description: 'Paper trading platform for Indian markets with Rs.10L virtual capital, real-time NSE/BSE data, and live TradingView candlestick charts. An AI trading mentor reviews virtual trades and explains market moves in plain language.',
+    stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM', 'Tailwind CSS'],
+    highlights: ['Real-time NSE/BSE data via Upstox API', 'Live TradingView candlestick charts', 'AI trading mentor that reviews trades risk-free'],
   },
   {
     name: 'ReviewIQ', tagline: 'AI-Powered PR Review', href: 'https://www.reviewiq.xyz',
@@ -25,10 +25,10 @@ const projects = [
     highlights: ['AI code insights & refactor suggestions', 'Webhook + vector embeddings', 'Automated static analysis'],
   },
   {
-    name: 'Devbond', tagline: 'Developer Networking Platform', href: 'https://github.com/shubhamvarshney',
-    description: 'Developer networking platform for engineers to connect and collaborate. Real-time communication powered by WebSockets enables live interaction between developers.',
-    stack: ['MongoDB', 'Express', 'React', 'Node.js', 'REST APIs', 'JWT', 'WebSocket'],
-    highlights: ['Developer networking & collaboration', 'Real-time chat via WebSocket', 'Secure JWT authentication'],
+    name: 'DevBond', tagline: 'Developer Networking Platform', href: 'https://github.com/shubhamvarshney',
+    description: 'Developer networking platform with AI-powered résumé parsing that auto-builds rich developer profiles for smarter matching. Real-time communication powered by Socket.IO enables live developer interactions.',
+    stack: ['MongoDB', 'Express', 'React', 'Node.js', 'REST APIs', 'JWT', 'Socket.IO'],
+    highlights: ['AI résumé parsing auto-builds rich profiles', 'Real-time chat via Socket.IO', 'Secure JWT authentication'],
   },
 ];
 
