@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Parallax } from 'react-scroll-parallax';
+import { Fireflies, Mist } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,8 +54,10 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="panel relative py-32 bg-[#111111] overflow-hidden" style={{ zIndex: 2 }}>
-      <div ref={blobRef}  className="absolute -top-20 -right-40 w-[600px] h-[600px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} id="about" className="panel relative py-32 bg-[#0c1a14] overflow-hidden" style={{ zIndex: 2 }}>
+      <Fireflies count={9} />
+      <Mist className="bottom-8 -left-24 w-[55vw] h-36" />
+      <div ref={blobRef}  className="absolute -top-20 -right-40 w-[600px] h-[600px] rounded-full bg-[#9fd8b7]/4 blur-3xl pointer-events-none" />
       <div ref={ringRef}  className="absolute top-20 left-10 w-32 h-32 rounded-full border-[20px] border-white/5 pointer-events-none" />
       <div ref={dotsRef}  className="absolute bottom-20 right-20 grid grid-cols-4 gap-2 pointer-events-none">
         {Array.from({ length: 16 }).map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/10" />)}

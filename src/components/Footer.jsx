@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Fireflies, Ridge } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,8 +35,10 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={sectionRef} className="panel relative bg-black border-t border-white/5 overflow-hidden pt-24 pb-10" style={{ zIndex: 7 }}>
-      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[380px] rounded-full bg-white/4 blur-3xl pointer-events-none" />
+    <footer ref={sectionRef} className="panel relative bg-[#050f0b] border-t border-white/5 overflow-hidden pt-24 pb-10" style={{ zIndex: 7 }}>
+      <Fireflies count={10} />
+      <Ridge variant={2} fill="#030a07" className="absolute bottom-0 left-0 right-0 h-28 opacity-80" />
+      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[380px] rounded-full bg-[#9fd8b7]/4 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <p className="section-label text-center mb-6">Have a project in mind?</p>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Parallax } from 'react-scroll-parallax';
+import { Fireflies } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,8 +71,9 @@ export default function Experience() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="experience" className="relative py-32 bg-[#111111] overflow-hidden" style={{ zIndex: 4 }}>
-      <div ref={blobRef}  className="absolute -top-20 -right-40 w-[550px] h-[550px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} id="experience" className="relative py-32 bg-[#0c1a14] overflow-hidden" style={{ zIndex: 4 }}>
+      <Fireflies count={8} />
+      <div ref={blobRef}  className="absolute -top-20 -right-40 w-[550px] h-[550px] rounded-full bg-[#9fd8b7]/4 blur-3xl pointer-events-none" />
       <div ref={ringRef}  className="absolute bottom-40 -left-16 w-48 h-48 rounded-full border-[28px] border-white/5 pointer-events-none" />
       <div ref={dotsRef}  className="absolute top-1/2 right-12 pointer-events-none opacity-20 grid grid-cols-5 gap-2.5">
         {Array.from({ length: 25 }).map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/40" />)}
@@ -118,7 +120,7 @@ export default function Experience() {
                 </Parallax>
 
                 <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-8 z-10">
-                  <div className="w-4 h-4 rounded-full bg-white shadow-lg shadow-white/20 ring-4 ring-[#111111]" />
+                  <div className="w-4 h-4 rounded-full bg-white shadow-lg shadow-white/20 ring-4 ring-[#0c1a14]" />
                 </div>
                 <div className="hidden md:block md:w-[calc(50%-24px)]" />
               </div>

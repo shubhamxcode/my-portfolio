@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Parallax } from 'react-scroll-parallax';
+import { Fireflies, Mist } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,9 +68,11 @@ export default function Contact() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="panel relative py-32 bg-[#111111] overflow-hidden" style={{ zIndex: 6 }}>
-      <div ref={blob1Ref}  className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
-      <div ref={blob2Ref}  className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/3 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} id="contact" className="panel relative py-32 bg-[#0d1b15] overflow-hidden" style={{ zIndex: 6 }}>
+      <Fireflies count={14} />
+      <Mist className="bottom-4 left-1/4 w-[50vw] h-32" dur="30s" />
+      <div ref={blob1Ref}  className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#9fd8b7]/4 blur-3xl pointer-events-none" />
+      <div ref={blob2Ref}  className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#7dd3fc]/3 blur-3xl pointer-events-none" />
       <Parallax rotate={[0, 45]} translateY={[-20, 20]} className="absolute top-1/3 left-12 pointer-events-none">
         <div ref={squareRef} className="w-16 h-16 border-4 border-white/10 rotate-12" />
       </Parallax>

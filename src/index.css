@@ -8,7 +8,7 @@
 
   body {
     font-family: 'Oswald', sans-serif;
-    background-color: #0a0a0a;
+    background-color: #081310;
     color: #f0f0f0;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -22,8 +22,8 @@
   }
 
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #111; }
-  ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+  ::-webkit-scrollbar-track { background: #0c1a14; }
+  ::-webkit-scrollbar-thumb { background: #2e4a3c; border-radius: 10px; }
 }
 
 @layer components {
@@ -37,9 +37,9 @@
   .glass-card {
     position: relative;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(220, 255, 235, 0.03);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(180, 230, 200, 0.09);
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
   }
 
@@ -49,7 +49,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.09), transparent 65%);
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(200, 255, 225, 0.08), transparent 65%);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -92,8 +92,41 @@
     font-weight: 600;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #666666;
+    color: #6f9c86;
     display: block;
+  }
+
+  /* ── Nature world ─────────────────────────────────────────────── */
+  .firefly {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 233, 168, 0.95) 0%, rgba(255, 233, 168, 0) 70%);
+    animation:
+      firefly-drift var(--dur, 9s) ease-in-out infinite alternate,
+      firefly-blink var(--blink, 3.2s) ease-in-out infinite;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+
+  .mist {
+    position: absolute;
+    border-radius: 9999px;
+    background: radial-gradient(ellipse, rgba(220, 255, 235, 0.05), transparent 70%);
+    filter: blur(30px);
+    animation: mist-drift var(--dur, 26s) ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  .aurora {
+    position: absolute;
+    filter: blur(70px);
+    opacity: 0.3;
+    background: linear-gradient(105deg, transparent 15%, rgba(94, 234, 212, 0.4) 40%, rgba(125, 211, 252, 0.25) 60%, transparent 85%);
+    animation: aurora-sway 16s ease-in-out infinite alternate;
+    will-change: transform;
+    pointer-events: none;
   }
 
   /* Hollow display text — award-site staple */
@@ -180,9 +213,29 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes firefly-drift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--dx, 30px), var(--dy, -40px)); }
+}
+
+@keyframes firefly-blink {
+  0%, 100% { opacity: 0.08; }
+  50%      { opacity: 0.9; }
+}
+
+@keyframes mist-drift {
+  from { transform: translateX(-6%); }
+  to   { transform: translateX(6%); }
+}
+
+@keyframes aurora-sway {
+  from { transform: translateY(0) rotate(-6deg) scaleX(1); }
+  to   { transform: translateY(-30px) rotate(-2deg) scaleX(1.15); }
+}
+
 ::selection {
-  background: rgba(255, 255, 255, 0.9);
-  color: #0a0a0a;
+  background: rgba(185, 231, 203, 0.95);
+  color: #06110c;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -191,4 +244,5 @@
   .glass-card::after { display: none; }
   .spin-slow { animation: none; }
   .noise-overlay { display: none; }
+  .firefly, .mist, .aurora { animation: none; }
 }

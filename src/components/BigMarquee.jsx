@@ -38,7 +38,7 @@ export default function BigMarquee({ top = 'FULL-STACK ENGINEER', bottom = 'AI B
 
   return (
     <section ref={sectionRef}
-      className="panel relative py-12 md:py-16 bg-[#0a0a0a] overflow-hidden border-y border-white/5"
+      className="panel relative py-12 md:py-16 bg-[#0a1712] overflow-hidden border-y border-white/5"
       style={{ zIndex }}>
       <div ref={row1Ref} className="flex w-max whitespace-nowrap will-change-transform">
         {repeat.map((_, i) => (

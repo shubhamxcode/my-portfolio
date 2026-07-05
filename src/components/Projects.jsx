@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Fireflies } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,9 +87,10 @@ export default function Projects() {
   };
 
   return (
-    <section ref={sectionRef} id="projects" className="panel relative bg-[#0d0d0d]"
+    <section ref={sectionRef} id="projects" className="panel relative bg-[#0b1813]"
       style={{ zIndex: 5, height: '340vh' }}>
       <div className="h-screen overflow-hidden flex flex-col justify-center relative">
+        <Fireflies count={8} />
 
         {/* Ghost title behind the cards */}
         <div className="absolute top-10 left-0 right-0 text-center pointer-events-none select-none">

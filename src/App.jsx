@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParallaxProvider } from 'react-scroll-parallax';
@@ -6,15 +6,22 @@ import './index.css';
 
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import FloatingShapes from './components/FloatingShapes';
-import BigMarquee from './components/BigMarquee';
+
+const Jungle = lazy(() => import('./components/Jungle'));
+
+// Holds the movie's full scroll height while the three.js chunk arrives,
+// with a dawn-sky title card so the first paint is never blank.
+function JungleFallback() {
+  return (
+    <div style={{ height: '900vh' }} className="bg-gradient-to-b from-[#f6c185] via-[#bfe4f0] to-[#081310]">
+      <div className="h-screen sticky top-0 flex flex-col items-center justify-center text-center px-6">
+        <p className="section-label mb-3 !text-[#5f4128]">Welcome to my world</p>
+        <h1 className="display text-6xl md:text-8xl text-[#243a2c] leading-none">SHUBHAM'S JUNGLE</h1>
+        <p className="mt-4 text-sm text-[#5f4128]/80">Full-Stack Engineer · the jungle is waking up…</p>
+      </div>
+    </div>
+  );
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +30,9 @@ export default function App() {
   const cursorDotRef = useRef(null);
   const progressRef  = useRef(null);
   const [loaded, setLoaded] = useState(false);
+
+  // Start downloading the jungle while the preloader plays
+  useEffect(() => { import('./components/Jungle'); }, []);
 
   // Scroll progress bar
   useEffect(() => {
@@ -146,7 +156,7 @@ export default function App() {
 
       {/* Scroll progress bar */}
       <div ref={progressRef}
-        className="fixed top-0 left-0 right-0 z-[10000] h-0.5 bg-gradient-to-r from-white/80 to-white/40 origin-left"
+        className="fixed top-0 left-0 right-0 z-[10000] h-0.5 bg-gradient-to-r from-[#9fd8b7]/90 to-[#7dd3fc]/50 origin-left"
         style={{ transform: 'scaleX(0)' }} />
 
       {/* Custom cursor — inverts whatever it passes over */}
@@ -160,18 +170,11 @@ export default function App() {
       {loaded && (
         <>
           <Navbar />
-          <FloatingShapes />
 
           <main className="stack-sections">
-            <Hero />
-            <About />
-            <BigMarquee top="FULL-STACK ENGINEER" bottom="AI BUILDER" zIndex={2} />
-            <Skills />
-            <Experience />
-            <Projects />
-            <BigMarquee top="GOT AN IDEA?" bottom="LET'S SHIP IT" zIndex={5} />
-            <Contact />
-            <Footer />
+            <Suspense fallback={<JungleFallback />}>
+              <Jungle />
+            </Suspense>
           </main>
         </>
       )}

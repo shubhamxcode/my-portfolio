@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Parallax } from 'react-scroll-parallax';
+import { Fireflies, Mist } from './Scenery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,9 +52,11 @@ export default function Skills() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="skills" className="panel relative py-32 bg-[#0d0d0d] overflow-hidden" style={{ zIndex: 3 }}>
-      <div ref={blobARef} className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-white/3 blur-3xl pointer-events-none" />
-      <div ref={blobBRef} className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-white/3 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} id="skills" className="panel relative py-32 bg-[#0b1813] overflow-hidden" style={{ zIndex: 3 }}>
+      <Fireflies count={7} />
+      <Mist className="top-16 -right-24 w-[50vw] h-32" dur="32s" />
+      <div ref={blobARef} className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#9fd8b7]/4 blur-3xl pointer-events-none" />
+      <div ref={blobBRef} className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-[#7dd3fc]/3 blur-3xl pointer-events-none" />
       <div ref={triRef}   className="absolute top-1/3 right-16 pointer-events-none opacity-10">
         <div className="w-20 h-20 border-4 border-white rotate-12" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
       </div>

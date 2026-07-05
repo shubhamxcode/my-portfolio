@@ -10,6 +10,12 @@ export default function Preloader({ onDone }) {
   const lineRef  = useRef(null);
 
   useEffect(() => {
+    // Hidden tab (opened in background)? Don't make anyone wait — show the site instantly.
+    if (document.hidden) {
+      onDone();
+      return undefined;
+    }
+
     document.body.style.overflow = 'hidden';
     const chars = nameRef.current.querySelectorAll('.pre-char');
     const cols  = rootRef.current.querySelectorAll('.pre-col');
@@ -23,18 +29,26 @@ export default function Preloader({ onDone }) {
     });
 
     tl.fromTo(chars, { yPercent: 120 },
-        { yPercent: 0, stagger: 0.04, duration: 0.8, ease: 'power4.out', delay: 0.15 })
+        { yPercent: 0, stagger: 0.028, duration: 0.55, ease: 'power4.out', delay: 0.05 })
       .fromTo(lineRef.current, { scaleX: 0 },
-        { scaleX: 1, duration: 1.2, ease: 'power2.inOut' }, '<')
+        { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, '<')
       .to(counter, {
-        v: 100, duration: 1.2, ease: 'power2.inOut',
+        v: 100, duration: 0.8, ease: 'power2.inOut',
         onUpdate: () => { if (countRef.current) countRef.current.textContent = String(Math.round(counter.v)).padStart(3, '0'); },
       }, '<')
-      .to(chars, { yPercent: -120, stagger: 0.025, duration: 0.5, ease: 'power3.in' }, '+=0.2')
-      .to([countRef.current, lineRef.current], { opacity: 0, duration: 0.3 }, '<')
-      .to(cols, { scaleY: 0, transformOrigin: 'top center', stagger: 0.07, duration: 0.75, ease: 'power4.inOut' }, '-=0.15');
+      .to(chars, { yPercent: -120, stagger: 0.015, duration: 0.35, ease: 'power3.in' }, '+=0.1')
+      .to([countRef.current, lineRef.current], { opacity: 0, duration: 0.25 }, '<')
+      .to(cols, { scaleY: 0, transformOrigin: 'top center', stagger: 0.05, duration: 0.55, ease: 'power4.inOut' }, '-=0.1');
 
-    return () => { tl.kill(); document.body.style.overflow = ''; };
+    // Tab hidden mid-animation → jump straight to the end instead of crawling at 2fps.
+    const onVisibility = () => { if (document.hidden) tl.progress(1); };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      tl.kill();
+      document.body.style.overflow = '';
+    };
   }, [onDone]);
 
   return (
@@ -42,7 +56,7 @@ export default function Preloader({ onDone }) {
       {/* Curtain columns */}
       <div className="absolute inset-0 flex">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="pre-col flex-1 h-full bg-[#0a0a0a]" style={{ willChange: 'transform' }} />
+          <div key={i} className="pre-col flex-1 h-full bg-[#081310]" style={{ willChange: 'transform' }} />
         ))}
       </div>
 
@@ -61,7 +75,7 @@ export default function Preloader({ onDone }) {
 
       {/* Progress line */}
       <div ref={lineRef}
-        className="absolute left-1/2 -translate-x-1/2 bottom-[22%] w-48 h-px bg-white/40 origin-left"
+        className="absolute left-1/2 -translate-x-1/2 bottom-[22%] w-48 h-px bg-[#9fd8b7]/50 origin-left"
         style={{ transform: 'scaleX(0)' }} />
 
       {/* Counter */}
