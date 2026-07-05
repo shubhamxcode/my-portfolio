@@ -2,10 +2,12 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParallaxProvider } from 'react-scroll-parallax';
+import Lenis from 'lenis';
 import './index.css';
 
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
+import AmbientSound from './components/AmbientSound';
 
 const Jungle = lazy(() => import('./components/Jungle'));
 
@@ -33,6 +35,20 @@ export default function App() {
 
   // Start downloading the jungle while the preloader plays
   useEffect(() => { import('./components/Jungle'); }, []);
+
+  // Buttery smooth scrolling — Lenis drives the scroll, GSAP's ticker drives Lenis
+  useEffect(() => {
+    if (!loaded) return undefined;
+    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    const raf = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
+    return () => {
+      gsap.ticker.remove(raf);
+      lenis.destroy();
+    };
+  }, [loaded]);
 
   // Scroll progress bar
   useEffect(() => {
@@ -170,6 +186,7 @@ export default function App() {
       {loaded && (
         <>
           <Navbar />
+          <AmbientSound />
 
           <main className="stack-sections">
             <Suspense fallback={<JungleFallback />}>
