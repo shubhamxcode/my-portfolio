@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
  * SHUBHAM'S JUNGLE — a scroll-driven 3D movie.
  *
  * The journey: dawn aerial → the animals of the stack (skills) → the Career
- * Stones (experience) → the Empire, four monuments each housing one project →
+ * Stones (experience) → the Empire, three monuments each housing one project →
  * home at dusk. One canvas; ScrollTrigger owns the camera; rendering pauses
  * off screen.
  */
@@ -52,8 +52,7 @@ const CAM = [
   [0.655, [0, 11, -100],    [0, 8, -125]],     // empire wide shot
   [0.710, [-5.5, 6.5, -112],[-9, 7, -121]],    // Souji observatory
   [0.770, [-0.5, 6, -118],  [-3, 6.5, -127]],  // PaperX exchange
-  [0.830, [5.5, 6.5, -118], [3, 6.5, -127]],   // ReviewIQ watchtower
-  [0.890, [5.5, 6, -112],   [9, 7, -121]],     // DevBond twin towers
+  [0.850, [5.5, 6, -112],   [9, 7, -121]],     // DevBond twin towers
   [0.945, [4.5, 3.6, -133], [0, 2, -145]],     // home exterior
   [0.962, [0, 1.7, -137.5], [0, 1.8, -145]],   // walking to the door
   [0.974, [0, 1.7, -142.0], [0.6, 1.5, -146.2]], // through the door
@@ -65,7 +64,7 @@ const CHAPTERS = [
   {
     range: [-0.05, 0.055], hint: true, // starts below 0 so it's fully visible on load
     label: 'Welcome to my world', title: "SHUBHAM'S JUNGLE",
-    body: 'Full-Stack Engineer · 2+ years shipping production web apps. Meet the animals of my stack, walk the Career Stones, visit the four monuments I built — then find me at the hut.',
+    body: 'Full-Stack Engineer · 2+ years shipping production web apps. Meet the animals of my stack, walk the Career Stones, visit the three monuments I built — then find me at the hut.',
   },
   {
     range: [0.075, 0.135],
@@ -120,8 +119,8 @@ const CHAPTERS = [
   },
   {
     range: [0.533, 0.575],
-    label: 'Experience 02 / 03 · The 2025 stone', title: 'FULL STACK INTERN',
-    company: 'AdsFlicker', period: 'Oct 2024 – Mar 2025 · Remote',
+    label: 'Experience 02 / 03 · The 2025 stone', title: 'FULL STACK DEVELOPER',
+    company: 'AdsFlicker', period: 'Apr 2025 – Apr 2026 · Full-time · Remote',
     points: [
       'Built campaign management, tracking and reporting modules for CPA, CPC and CPM ad models.',
       'Integrated AI campaign insights — auto-generated ad copy and plain-language performance summaries from live traffic data.',
@@ -130,8 +129,8 @@ const CHAPTERS = [
   },
   {
     range: [0.587, 0.628],
-    label: 'Experience 03 / 03 · The tallest stone', title: 'FULL STACK DEVELOPER',
-    company: 'RedCircle', period: 'Apr 2025 – Apr 2026 · Full-time · Remote',
+    label: 'Experience 03 / 03 · The tallest stone', title: 'FULL STACK INTERN',
+    company: 'RedCircle', period: 'Oct 2024 – Mar 2025 · Intern · Remote',
     points: [
       'Built a platform tokenizing Reddit & X posts as tradable SPL tokens on Solana.',
       'Owned the full stack: React/Next.js frontend, Node/Express backend, PostgreSQL, Solana/Anchor smart contracts.',
@@ -142,7 +141,7 @@ const CHAPTERS = [
   {
     range: [0.638, 0.678],
     label: 'What I built', title: 'MY EMPIRE',
-    body: 'Four monuments, each one a product built from scratch. The camera will take you to every door.',
+    body: 'Three monuments, each one a product built from scratch. The camera will take you to every door.',
   },
   {
     range: [0.688, 0.744],
@@ -167,19 +166,8 @@ const CHAPTERS = [
     link: { href: 'https://www.paperx.xyz', label: 'Visit live site ↗' },
   },
   {
-    range: [0.812, 0.868],
-    label: 'Monument III · The Watchtower', title: 'REVIEWIQ',
-    plain: 'AI code review for GitHub pull requests.',
-    points: [
-      'Analyzes PRs with code insights, refactor suggestions, and issue detection.',
-      'Webhook pipeline with vector embeddings for context-aware analysis plus automated static checks.',
-    ],
-    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Docker'],
-    link: { href: 'https://www.reviewiq.xyz', label: 'Visit live site ↗' },
-  },
-  {
-    range: [0.872, 0.925],
-    label: 'Monument IV · The Twin Towers', title: 'DEVBOND',
+    range: [0.812, 0.900],
+    label: 'Monument III · The Twin Towers', title: 'DEVBOND',
     plain: 'Where developers find their people.',
     points: [
       'AI résumé parsing auto-builds rich developer profiles for smarter matching.',
@@ -531,7 +519,7 @@ function buildCareerStones(disposables) {
   return { group: g, update };
 }
 
-/** The Empire: four distinct monuments, one per project, on the plateau. */
+/** The Empire: three distinct monuments, one per project, on the plateau. */
 function buildEmpire(disposables) {
   const g = new THREE.Group();
   const stone = flatMat('#cfc4ae');
@@ -571,15 +559,7 @@ function buildEmpire(disposables) {
   const coin = mk(new THREE.CylinderGeometry(0.55, 0.55, 0.12, 12), glowGold, exX + 1.5, TOP + 5.0, exZ);
   coin.rotation.x = Math.PI / 2;
 
-  /* Monument III — REVIEWIQ, the Watchtower (3, -127): tower with a lens ring */
-  const wtX = 3, wtZ = -127;
-  mk(new THREE.BoxGeometry(2.2, 5.6, 2.2), stone, wtX, TOP + 2.8, wtZ);
-  mk(new THREE.BoxGeometry(2.6, 0.5, 2.6), stoneDark, wtX, TOP + 5.85, wtZ);
-  mk(new THREE.ConeGeometry(1.9, 1.6, 4), roof, wtX, TOP + 6.9, wtZ, Math.PI / 4);
-  const lens = mk(new THREE.TorusGeometry(1.05, 0.16, 8, 20), gold, wtX, TOP + 4.4, wtZ + 1.35);
-  const pupil = mk(new THREE.SphereGeometry(0.4, 10, 10), glowGold, wtX, TOP + 4.4, wtZ + 1.35);
-
-  /* Monument IV — DEVBOND, the Twin Towers (9, -121) linked by a bridge */
+  /* Monument III — DEVBOND, the Twin Towers (9, -121) linked by a bridge */
   const tbX = 9, tbZ = -121;
   const flags = [];
   [-1.6, 1.6].forEach((dx, i) => {
@@ -597,7 +577,7 @@ function buildEmpire(disposables) {
   mk(new THREE.BoxGeometry(3.4, 0.08, 0.8), gold, tbX, TOP + 3.62, tbZ);
 
   // windows scattered on all monuments
-  [[obX, obZ + 1.9, 2.6], [exX - 1.5, exZ + 1.32, 1.4], [exX, exZ + 1.32, 1.8], [exX + 1.5, exZ + 1.32, 2.4], [wtX, wtZ + 1.12, 2.0], [wtX, wtZ + 1.12, 3.4], [tbX - 1.6, tbZ + 1.0, 2.2], [tbX + 1.6, tbZ + 1.0, 3.0]]
+  [[obX, obZ + 1.9, 2.6], [exX - 1.5, exZ + 1.32, 1.4], [exX, exZ + 1.32, 1.8], [exX + 1.5, exZ + 1.32, 2.4], [tbX - 1.6, tbZ + 1.0, 2.2], [tbX + 1.6, tbZ + 1.0, 3.0]]
     .forEach(([x, z, h]) => mk(new THREE.BoxGeometry(0.3, 0.42, 0.1), gold, x, TOP + h, z));
 
   const update = (t) => {
@@ -607,8 +587,6 @@ function buildEmpire(disposables) {
     });
     orb.scale.setScalar(1 + Math.sin(t * 2.4) * 0.12);
     coin.rotation.z = t * 0.8;
-    lens.rotation.z = t * 0.5;
-    pupil.scale.setScalar(1 + Math.sin(t * 3.1) * 0.1);
   };
   return { group: g, update };
 }

@@ -21,13 +21,6 @@ const projects = [
     cover: 'cover-bars',
   },
   {
-    name: 'ReviewIQ', tagline: 'AI-Powered PR Review', href: 'https://www.reviewiq.xyz',
-    description: 'AI platform that analyzes GitHub Pull Requests with code insights, refactor suggestions, and issue detection. Webhook workflow with vector embeddings for context-aware analysis.',
-    stack: ['React', 'TypeScript', 'TanStack Router', 'Node.js', 'Express', 'PostgreSQL', 'Docker', 'AI API'],
-    highlights: ['AI code insights & refactor suggestions', 'Webhook + vector embeddings', 'Automated static analysis'],
-    cover: 'cover-grid',
-  },
-  {
     name: 'DevBond', tagline: 'Developer Networking Platform', href: 'https://github.com/shubhamvarshney',
     description: 'Developer networking platform with AI-powered résumé parsing that auto-builds rich developer profiles for smarter matching. Real-time communication powered by Socket.IO enables live developer interactions.',
     stack: ['MongoDB', 'Express', 'React', 'Node.js', 'REST APIs', 'JWT', 'Socket.IO'],

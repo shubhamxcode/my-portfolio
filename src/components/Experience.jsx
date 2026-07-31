@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: 'Full Stack Developer', company: 'RedCircle',
-    period: 'Apr 2025 – Apr 2026', type: 'Full-time · Remote',
+    role: 'Full Stack Intern', company: 'RedCircle',
+    period: 'Oct 2024 – Mar 2025', type: 'Intern · Remote',
     points: [
       'Built a platform to tokenize Reddit and X posts as tradable SPL tokens on Solana, enabling creators to list posts and curators to discover and trade them.',
       'Developed the full stack including React/Next.js frontend, Node.js/Express backend, PostgreSQL database, and Solana/Anchor smart contracts.',
@@ -18,8 +18,8 @@ const experiences = [
     stack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Solana/Anchor'],
   },
   {
-    role: 'Full Stack Intern', company: 'AdsFlicker',
-    period: 'Oct 2024 – Mar 2025', type: 'Intern · Remote',
+    role: 'Full Stack Developer', company: 'AdsFlicker',
+    period: 'Apr 2025 – Apr 2026', type: 'Full-time · Remote',
     points: [
       'Developed and optimized core features for AdsFlicker\'s advertising platform, enabling advertisers and publishers to manage campaigns using modern web technologies.',
       'Built scalable full-stack modules for campaign management, tracking, and reporting supporting ad models such as CPA, CPC, and CPM.',
