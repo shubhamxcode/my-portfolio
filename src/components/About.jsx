@@ -7,9 +7,9 @@ import { Fireflies, Mist } from './Scenery';
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { value: 2,  suffix: '+', label: 'Years Experience' },
+  { value: 1.5, suffix: '',  label: 'Years Experience' },
   { value: 10, suffix: '+', label: 'Projects Built' },
-  { value: 3,  suffix: '',  label: 'Companies' },
+  { value: 2,  suffix: '',  label: 'Companies' },
   { value: 5,  suffix: '',  label: 'Languages' },
 ];
 
@@ -27,12 +27,16 @@ export default function About() {
     const ctx = gsap.context(() => {
       // Count-up stats
       statsRef.current.querySelectorAll('[data-count]').forEach((el) => {
-        const target = parseInt(el.dataset.count, 10);
+        const target = Number.parseFloat(el.dataset.count);
         const obj = { v: 0 };
         gsap.to(obj, {
           v: target, duration: 1.6, ease: 'power2.out',
           scrollTrigger: { trigger: statsRef.current, start: 'top 85%' },
-          onUpdate: () => { el.textContent = Math.round(obj.v); },
+          onUpdate: () => {
+            el.textContent = Number.isInteger(target)
+              ? Math.round(obj.v)
+              : obj.v.toFixed(1);
+          },
         });
       });
       gsap.to(blobRef.current, { y: -100, ease: 'none',

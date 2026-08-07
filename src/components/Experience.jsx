@@ -8,28 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: 'Full Stack Intern', company: 'RedCircle',
-    period: 'Oct 2024 – Mar 2025', type: 'Intern · Remote',
-    points: [
-      'Built a platform to tokenize Reddit and X posts as tradable SPL tokens on Solana, enabling creators to list posts and curators to discover and trade them.',
-      'Developed the full stack including React/Next.js frontend, Node.js/Express backend, PostgreSQL database, and Solana/Anchor smart contracts.',
-      'Implemented a gamified engagement system with leaderboards, rich profiles, and performance metrics.',
-    ],
-    stack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Solana/Anchor'],
-  },
-  {
-    role: 'Full Stack Developer', company: 'AdsFlicker',
-    period: 'Apr 2025 – Apr 2026', type: 'Full-time · Remote',
+    role: 'Full Stack Intern', company: 'AdsFlicker',
+    period: 'Jun 2025 – Jun 2026', type: 'Full-time · Remote',
     points: [
       'Developed and optimized core features for AdsFlicker\'s advertising platform, enabling advertisers and publishers to manage campaigns using modern web technologies.',
-      'Built scalable full-stack modules for campaign management, tracking, and reporting supporting ad models such as CPA, CPC, and CPM.',
-      'Integrated AI-powered campaign insights — auto-generated ad copy suggestions and plain-language performance summaries from real-time traffic and conversion data.',
+      'Built scalable full-stack modules for campaign management, tracking, and reporting supporting CPA, CPC, and CPM ad models.',
+      'Integrated AI-powered campaign insights, ad-copy suggestions, and plain-language performance summaries from real-time traffic and conversion data.',
     ],
     stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL'],
   },
   {
     role: 'Full Stack Intern', company: 'AshnaAI',
-    period: 'Apr 2024 – Sep 2024', type: 'Internship · Remote',
+    period: 'Dec 2024 – May 2025', type: 'Internship · Remote',
     points: [
       'Developed AshnaAI\'s AI-powered platform using Next.js, TypeScript, and Tailwind CSS with focus on performance and responsiveness.',
       'Built dynamic UI components and integrated RESTful APIs to enhance user interaction and scalability.',
