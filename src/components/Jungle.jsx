@@ -116,16 +116,18 @@ const CHAPTERS = [
       'Built dynamic UI components and integrated RESTful APIs for scalable, seamless data flow.',
     ],
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'REST APIs'],
+    link: { href: 'https://www.ashna.ai', label: 'Visit AshnaAI ↗' },
   },
   {
     range: [0.535, 0.590],
-    label: 'Experience 02 / 02 · The 2025 stone', title: 'FULL STACK INTERN',
+    label: 'Experience 02 / 02 · The 2025 stone', title: 'FULL STACK DEVELOPER',
     company: 'AdsFlicker', period: 'Jun 2025 – Jun 2026 · Full-time · Remote',
     points: [
       'Developed core advertising features and scalable campaign management, tracking, and reporting modules for CPA, CPC, and CPM models.',
       'Integrated AI-powered campaign insights, ad-copy suggestions, and plain-language summaries from real-time traffic and conversion data.',
     ],
     stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL'],
+    link: { href: 'https://adsflicker.com/', label: 'Visit AdsFlicker ↗' },
   },
   {
     range: [0.602, 0.642],
@@ -141,7 +143,7 @@ const CHAPTERS = [
       'Ships an autonomous job-application agent — a Chrome extension that ranks jobs against my résumé, writes tailored answers, and applies hands-free.',
     ],
     stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
-    link: { href: 'https://github.com/shubhamxcode', label: 'View on GitHub ↗' },
+    link: { href: 'https://souji-web.vercel.app', label: 'Visit live site ↗' },
   },
   {
     range: [0.712, 0.766],
@@ -163,7 +165,7 @@ const CHAPTERS = [
       'Built across React/Next.js, Node.js/Express, PostgreSQL, and Solana.',
     ],
     stack: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'Solana'],
-    link: { href: 'https://github.com/shubhamxcode', label: 'View on GitHub ↗' },
+    link: { href: 'https://www.redcircle.lol/home', label: 'Visit live site ↗' },
   },
   {
     range: [0.840, 0.900],
@@ -174,7 +176,7 @@ const CHAPTERS = [
       'Real-time chat over Socket.IO with secure JWT authentication.',
     ],
     stack: ['MongoDB', 'Express', 'React', 'Node.js', 'Socket.IO', 'JWT'],
-    link: { href: 'https://github.com/shubhamvarshney', label: 'View on GitHub ↗' },
+    link: { href: 'https://dev-bond-git-main-shubham-varshneys-projects.vercel.app/', label: 'Visit live site ↗' },
   },
   {
     range: [0.928, 0.960],
@@ -1197,7 +1199,7 @@ export default function Jungle() {
                     className="px-7 py-3 text-sm font-bold text-black rounded-full bg-[#ffe9a8] hover:bg-white transition-colors">
                     Hire Me
                   </a>
-                  <a href="/shubham%20resume.pdf" download="Shubham-Varshney-Resume.pdf"
+                  <a href="/shubham%20varshney.pdf" download="Shubham-Varshney-Resume.pdf"
                     className="px-7 py-3 text-sm font-semibold text-white rounded-full border border-white/30 hover:bg-white/10 transition-colors">
                     Resume
                   </a>

@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    name: 'Souji', tagline: 'Siri-Style AI Assistant for macOS', href: 'https://github.com/shubhamxcode',
+    name: 'Souji', tagline: 'Siri-Style AI Assistant for macOS', href: 'https://souji-web.vercel.app',
     description: 'AI assistant for macOS with voice control, an LLM brain, screen vision, and natural-language Mac automation backed by local-first memory. Includes an autonomous job-application agent shipped as a Chrome extension.',
     stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
     highlights: ['Voice control + LLM brain + screen vision', 'Autonomous job-application agent that ranks jobs & auto-applies', 'Natural-language Mac automation with local-first memory'],
@@ -21,14 +21,14 @@ const projects = [
     cover: 'cover-bars',
   },
   {
-    name: 'RedCircle', tagline: 'Social Token Platform', href: 'https://github.com/shubhamxcode',
+    name: 'RedCircle', tagline: 'Social Token Platform', href: 'https://www.redcircle.lol/home',
     description: 'Platform that transforms Reddit and X posts into tradable SPL tokens on Solana, connecting creators who list posts with curators who discover and trade them.',
     stack: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'Solana'],
     highlights: ['Reddit and X posts tokenized as SPL tokens', 'Creator listing and curator discovery flows', 'Full-stack platform built on Solana'],
     cover: 'cover-grid',
   },
   {
-    name: 'DevBond', tagline: 'Developer Networking Platform', href: 'https://github.com/shubhamvarshney',
+    name: 'DevBond', tagline: 'Developer Networking Platform', href: 'https://dev-bond-git-main-shubham-varshneys-projects.vercel.app/',
     description: 'Developer networking platform with AI-powered résumé parsing that auto-builds rich developer profiles for smarter matching. Real-time communication powered by Socket.IO enables live developer interactions.',
     stack: ['MongoDB', 'Express', 'React', 'Node.js', 'REST APIs', 'JWT', 'Socket.IO'],
     highlights: ['AI résumé parsing auto-builds rich profiles', 'Real-time chat via Socket.IO', 'Secure JWT authentication'],

@@ -8,8 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: 'Full Stack Intern', company: 'AdsFlicker',
+    role: 'Full Stack Developer', company: 'AdsFlicker',
     period: 'Jun 2025 – Jun 2026', type: 'Full-time · Remote',
+    href: 'https://adsflicker.com/',
     points: [
       'Developed and optimized core features for AdsFlicker\'s advertising platform, enabling advertisers and publishers to manage campaigns using modern web technologies.',
       'Built scalable full-stack modules for campaign management, tracking, and reporting supporting CPA, CPC, and CPM ad models.',
@@ -20,6 +21,7 @@ const experiences = [
   {
     role: 'Full Stack Intern', company: 'AshnaAI',
     period: 'Dec 2024 – May 2025', type: 'Internship · Remote',
+    href: 'https://www.ashna.ai',
     points: [
       'Developed AshnaAI\'s AI-powered platform using Next.js, TypeScript, and Tailwind CSS with focus on performance and responsiveness.',
       'Built dynamic UI components and integrated RESTful APIs to enhance user interaction and scalability.',
@@ -87,7 +89,10 @@ export default function Experience() {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="text-lg font-bold text-white">{exp.role}</h3>
-                      <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mt-1 bg-white/10 text-gray-300 border border-white/10">{exp.company}</span>
+                      <a href={exp.href} target="_blank" rel="noopener noreferrer"
+                        className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mt-1 bg-white/10 text-gray-300 border border-white/10 hover:bg-white hover:text-black transition-colors">
+                        {exp.company} ↗
+                      </a>
                     </div>
                     <div className="text-right shrink-0 ml-4">
                       <p className="text-xs font-semibold text-gray-400">{exp.period}</p>

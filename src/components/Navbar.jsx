@@ -30,7 +30,7 @@ export default function Navbar() {
         </button>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <a href="/shubham%20resume.pdf" download="Shubham-Varshney-Resume.pdf"
+          <a href="/shubham%20varshney.pdf" download="Shubham-Varshney-Resume.pdf"
             className="px-4 py-1.5 text-sm font-semibold text-gray-300 border border-white/20 rounded-full hover:bg-white/10 hover:text-white transition-colors">
             Resume
           </a>
