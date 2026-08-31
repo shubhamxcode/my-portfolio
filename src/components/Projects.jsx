@@ -7,32 +7,36 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    name: 'Souji', tagline: 'Siri-Style AI Assistant for macOS', href: 'https://souji-web.vercel.app',
-    description: 'AI assistant for macOS with voice control, an LLM brain, screen vision, and natural-language Mac automation backed by local-first memory. Includes an autonomous job-application agent shipped as a Chrome extension.',
-    stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
-    highlights: ['Voice control + LLM brain + screen vision', 'Autonomous job-application agent that ranks jobs & auto-applies', 'Natural-language Mac automation with local-first memory'],
-    cover: 'cover-rings',
-  },
-  {
-    name: 'PaperX', tagline: 'Paper Trading Platform', href: 'https://www.paperx.xyz',
-    description: 'Paper trading platform for Indian markets with Rs.10L virtual capital, real-time NSE/BSE data, and live TradingView candlestick charts. An AI trading mentor reviews virtual trades and explains market moves in plain language.',
-    stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM', 'Tailwind CSS'],
-    highlights: ['Real-time NSE/BSE data via Upstox API', 'Live TradingView candlestick charts', 'AI trading mentor that reviews trades risk-free'],
+    name: 'PaperX', tagline: 'Paper Trading Platform',
+    href: 'https://www.paperx.xyz', github: 'https://github.com/shubhamxcode/paperx',
+    description: 'Paper trading platform for Indian markets with ₹10L virtual capital, real-time NSE/BSE data, and live TradingView candlestick charts. An AI trading mentor reviews virtual trades and explains market moves in plain language.',
+    stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM'],
+    highlights: ['Real-time NSE/BSE data via Upstox API', 'Live TradingView candlestick charts', 'AI trading mentor for risk-free learning'],
     cover: 'cover-bars',
   },
   {
-    name: 'RedCircle', tagline: 'Social Token Platform', href: 'https://www.redcircle.lol/home',
-    description: 'Platform that transforms Reddit and X posts into tradable SPL tokens on Solana, connecting creators who list posts with curators who discover and trade them.',
+    name: 'RedCircle', tagline: 'Social Token Platform',
+    href: 'https://www.redcircle.lol/home', github: 'https://github.com/Redcircle-lol/Redcircle_Web',
+    description: 'Platform that tokenizes Reddit and X posts as tradable SPL tokens on Solana — ~$3.2K in activity through the platform and token ecosystem after launch.',
     stack: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'Solana'],
-    highlights: ['Reddit and X posts tokenized as SPL tokens', 'Creator listing and curator discovery flows', 'Full-stack platform built on Solana'],
+    highlights: ['Reddit and X posts tokenized as SPL tokens on Solana', 'Full-stack React/Next.js + Node.js/Express platform', '~$3.2K in post-launch platform activity'],
     cover: 'cover-grid',
   },
   {
-    name: 'DevBond', tagline: 'Developer Networking Platform', href: 'https://dev-bond-git-main-shubham-varshneys-projects.vercel.app/',
-    description: 'Developer networking platform with AI-powered résumé parsing that auto-builds rich developer profiles for smarter matching. Real-time communication powered by Socket.IO enables live developer interactions.',
-    stack: ['MongoDB', 'Express', 'React', 'Node.js', 'REST APIs', 'JWT', 'Socket.IO'],
-    highlights: ['AI résumé parsing auto-builds rich profiles', 'Real-time chat via Socket.IO', 'Secure JWT authentication'],
+    name: 'ReviewIQ', tagline: 'AI Code Review Platform',
+    href: 'https://www.reviewiq.xyz', github: 'https://github.com/shubhamxcode/ReviewIQ',
+    description: 'AI platform for GitHub Pull Request analysis with code insights, refactoring suggestions, and automated issue detection. Webhook-driven workflow with vector embeddings for context-aware PR analysis.',
+    stack: ['React', 'TypeScript', 'TanStack Router', 'Node.js', 'Express', 'PostgreSQL', 'Docker'],
+    highlights: ['AI-powered GitHub PR analysis with actionable suggestions', 'Webhook-driven workflow with vector embeddings', 'Automated static analysis and security scanning'],
     cover: 'cover-dots',
+  },
+  {
+    name: 'Souji', tagline: 'Siri-Style AI Assistant for macOS',
+    href: 'https://souji-web.vercel.app', github: 'https://github.com/SoujiAI/Souji',
+    description: 'AI assistant for macOS with voice control, LLM reasoning, screen vision, and natural-language Mac automation backed by local-first memory. Includes an autonomous job-application agent shipped as a Chrome extension.',
+    stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
+    highlights: ['Voice control + LLM reasoning + screen vision', 'Autonomous job-application agent with animated cursor automation', 'Natural-language Mac automation with local-first memory'],
+    cover: 'cover-rings',
   },
 ];
 
@@ -139,12 +143,20 @@ export default function Projects() {
                       <h3 className="text-2xl font-bold text-white">{proj.name}</h3>
                       <p className="text-sm font-semibold mt-1 text-gray-500">{proj.tagline}</p>
                     </div>
-                    <a href={proj.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${proj.name}`}
-                      className="p-2.5 rounded-full bg-white/5 hover:bg-white hover:text-black transition-colors text-gray-400">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <a href={proj.github} target="_blank" rel="noopener noreferrer" aria-label={`${proj.name} on GitHub`}
+                        className="p-2.5 rounded-full bg-white/5 hover:bg-white hover:text-black transition-colors text-gray-400">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.395-.135-.345-.72-1.395-1.23-1.875-.42-.405-1.02-.705-.015-.72.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A8.205 8.205 0 0024 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                      </a>
+                      <a href={proj.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${proj.name}`}
+                        className="p-2.5 rounded-full bg-white/5 hover:bg-white hover:text-black transition-colors text-gray-400">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed mb-5">{proj.description}</p>
                   <ul className="space-y-2 mb-5">

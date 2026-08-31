@@ -19,7 +19,7 @@ function JungleFallback() {
       <div className="h-screen sticky top-0 flex flex-col items-center justify-center text-center px-6">
         <p className="section-label mb-3 !text-[#5f4128]">Welcome to my world</p>
         <h1 className="display text-6xl md:text-8xl text-[#243a2c] leading-none">SHUBHAM'S JUNGLE</h1>
-        <p className="mt-4 text-sm text-[#5f4128]/80">Full-Stack Engineer · the jungle is waking up…</p>
+        <p className="mt-4 text-sm text-[#5f4128]/80">Full-Stack Software Engineer · the jungle is waking up…</p>
       </div>
     </div>
   );
