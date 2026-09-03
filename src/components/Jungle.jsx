@@ -11,7 +11,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
  * off screen.
  */
 
-const SECTION_VH = 1350; // scroll length of the movie
+const SECTION_VH = 1500; // scroll length of the movie
 
 /* ── deterministic pseudo-noise for terrain & scatter ── */
 const n2 = (x, z) =>
@@ -45,14 +45,15 @@ const CAM = [
   [0.245, [7.5, 2.4, -31],  [3.5, 0.5, -38]],  // serpent
   [0.315, [-9, 3.4, -46],   [-5, 1.8, -54]],   // elephant
   [0.385, [8, 4.2, -63],    [4, 4.0, -70]],    // owl
-  [0.445, [0, 7, -68],      [0, 1, -95]],      // experience — wide shot down the trail of years
-  [0.500, [-1, 2.4, -77],   [4, 2.2, -84]],    // AshnaAI career stone
-  [0.562, [1, 2.8, -91],    [-4, 3.0, -98]],   // AdsFlicker career stone
-  [0.625, [0, 11, -101],    [0, 8, -125]],     // empire wide shot
-  [0.678, [-0.5, 6, -118],  [-3, 6.5, -127]],  // PaperX exchange
-  [0.740, [5.5, 6.5, -118], [3, 6.5, -127]],   // RedCircle token forge
-  [0.803, [5.5, 6, -112],   [9, 7, -121]],     // ReviewIQ review spire
-  [0.870, [-5.5, 6.5, -112],[-9, 7, -121]],    // Souji observatory
+  [0.442, [0, 7, -66],      [0, 1, -95]],      // experience — wide shot down the trail of years
+  [0.496, [-1, 2.4, -73],   [4, 2.2, -80]],    // AshnaAI career stone
+  [0.554, [1, 2.8, -84],    [-4, 3.0, -91]],   // AdsFlicker career stone
+  [0.612, [-1, 2.6, -95],   [4, 3.2, -102]],   // RedCircle career stone
+  [0.664, [0, 11, -108],    [0, 8, -125]],     // empire wide shot
+  [0.712, [-0.5, 6, -118],  [-3, 6.5, -127]],  // PaperX exchange
+  [0.767, [5.5, 6.5, -118], [3, 6.5, -127]],   // Notifyr watchtower
+  [0.822, [5.5, 6, -112],   [9, 7, -121]],     // ReviewIQ review spire
+  [0.877, [-5.5, 6.5, -112],[-9, 7, -121]],    // Souji observatory
   [0.945, [4.5, 3.6, -133], [0, 2, -145]],     // home exterior
   [0.962, [0, 1.7, -137.5], [0, 1.8, -145]],   // walking to the door
   [0.974, [0, 1.7, -142.0], [0.6, 1.5, -146.2]], // through the door
@@ -64,14 +65,14 @@ const CHAPTERS = [
   {
     range: [-0.05, 0.055], hint: true, // starts below 0 so it's fully visible on load
     label: 'Welcome to my world', title: "SHUBHAM'S JUNGLE",
-    body: 'Full-Stack Software Engineer · 1.5+ years shipping production-ready web apps. Meet the animals of my stack, walk the Career Stones, visit the four monuments I built — then find me at the hut.',
+    body: 'Full-Stack Software Engineer · 2.5+ years building production-ready web apps and AI-powered products. Meet the animals of my stack, walk the Career Stones, visit the four monuments I built, then find me at the hut.',
   },
   {
     range: [0.075, 0.135],
     label: 'Species 01 · The React Fox', title: 'FRONTEND',
     plain: 'I build fast, beautiful interfaces that users love.',
     stack: ['React', 'Next.js', 'Redux · RTK Query', 'TanStack Query', 'Tailwind CSS'],
-    level: '1.5+ years in production',
+    level: '2.5+ years in production',
   },
   {
     range: [0.145, 0.205],
@@ -84,7 +85,7 @@ const CHAPTERS = [
     range: [0.215, 0.275],
     label: 'Species 03 · The Python Serpent', title: 'AI ENGINEERING',
     plain: 'I ship AI products — autonomous agents, vision, and voice.',
-    stack: ['LLM Integration (Gemini)', 'AI Agents', 'Browser Automation', 'Whisper STT', 'Vector Embeddings'],
+    stack: ['LLM Integration (Gemini)', 'AI Agents', 'Browser Automation', 'Vision AI', 'Whisper STT', 'Vector Embeddings'],
     level: 'AI across products and workflows',
   },
   {
@@ -102,47 +103,58 @@ const CHAPTERS = [
     level: 'Event-driven · real-time · deployed',
   },
   {
-    range: [0.425, 0.465],
+    range: [0.425, 0.462],
     label: 'The trail of years · 2024 → 2026', title: 'EXPERIENCE',
-    body: 'Two stones mark the production teams where I learned to own features end to end — from polished interfaces to scalable APIs and AI-powered workflows.',
-    stack: ['2 Companies', '1.5 Years', 'Production Experience'],
+    body: 'Three companies where I shipped production features end to end, from the interface down to the database.',
+    stack: ['3 Companies', '2.5+ Years', 'Production Experience'],
   },
   {
-    range: [0.478, 0.525],
-    label: 'Experience 01 / 02 · The 2024 stone', title: 'FULL STACK INTERN',
+    range: [0.472, 0.520],
+    label: 'Experience 01 / 03 · The 2024 stone', title: 'FULL STACK INTERN',
     company: 'AshnaAI', period: 'Dec 2024 – May 2025 · Internship · Remote',
     points: [
-      'Developed and maintained AshnaAI\'s AI-powered platform using Next.js, TypeScript, and Tailwind CSS with a focus on performance and responsiveness.',
-      'Built dynamic UI components and integrated RESTful APIs to enhance user interaction and scalability.',
-      'Collaborated with backend services to implement scalable features and ensure seamless data flow across the platform.',
+      'Developed AshnaAI\'s platform using Next.js, TypeScript, and Tailwind CSS, focusing on performance and responsive UI.',
+      'Built reusable UI components and integrated RESTful APIs for scalable application workflows.',
     ],
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'RESTful APIs'],
     link: { href: 'https://www.ashna.ai', label: 'Visit AshnaAI ↗' },
   },
   {
-    range: [0.535, 0.590],
-    label: 'Experience 02 / 02 · The 2025 stone', title: 'FULL STACK DEVELOPER',
-    company: 'AdsFlicker', period: 'Jun 2025 – Jun 2026 · Full-time · Remote',
+    range: [0.530, 0.578],
+    label: 'Experience 02 / 03 · The 2025 stone', title: 'FULL STACK ENGINEER',
+    company: 'AdsFlicker', period: 'Jun 2024 – Jun 2025 · Full-time · Remote',
     points: [
-      'Developed and optimized core features for AdsFlicker\'s advertising platform, enabling advertisers and publishers to manage campaigns using modern web technologies.',
-      'Built scalable full-stack modules for campaign management, tracking, and reporting supporting CPA, CPC, and CPM ad models.',
-      'Integrated AI-powered campaign insights — auto-generated ad copy suggestions and plain-language performance summaries from real-time traffic and conversion data.',
+      'Developed core features for AdsFlicker\'s advertising platform for advertisers and publishers.',
+      'Built campaign management, tracking, and reporting modules supporting CPA, CPC, and CPM ad models.',
+      'Integrated AI-powered campaign insights with automated ad copy suggestions and performance summaries.',
     ],
     stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL'],
-    link: { href: 'https://adsflicker.com/', label: 'Visit AdsFlicker ↗' },
+    link: { href: 'https://adsflicker.com', label: 'Visit AdsFlicker ↗' },
   },
   {
-    range: [0.602, 0.642],
+    range: [0.588, 0.636],
+    label: 'Experience 03 / 03 · The 2026 stone', title: 'FULL STACK ENGINEER',
+    company: 'RedCircle', period: 'Jul 2025 – Jul 2026 · Full-time · Remote',
+    points: [
+      'Built a full-stack platform that converts Reddit and X posts into tradable SPL tokens on Solana.',
+      'Developed the platform using React, Next.js, Node.js, Express, PostgreSQL, and Solana, including token creation and trading workflows.',
+      'Built scalable APIs and database workflows for social content, token metadata, users, and blockchain interactions.',
+    ],
+    stack: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'Solana'],
+    link: { href: 'https://www.redcircle.lol/home', label: 'Visit RedCircle ↗' },
+  },
+  {
+    range: [0.648, 0.680],
     label: 'What I built', title: 'MY EMPIRE',
     body: 'Four monuments, each one a product built from scratch. The camera will take you to every door.',
   },
   {
-    range: [0.650, 0.704],
+    range: [0.688, 0.735],
     label: 'Monument I · The Exchange', title: 'PAPERX',
     plain: 'Risk-free paper trading for Indian markets.',
     points: [
-      'Built a paper trading platform with ₹10L virtual capital, real-time NSE/BSE data, and live TradingView candlestick charts.',
-      'Integrated an AI trading mentor that reviews virtual trades and explains market moves in plain language — helping beginners learn trading risk-free.',
+      'Built a paper trading platform with ₹10L virtual capital, real-time NSE/BSE data, and live TradingView charts.',
+      'Added an AI trading mentor that reviews virtual trades and explains market movements in plain language.',
     ],
     stack: ['Next.js', 'TypeScript', 'Upstox API', 'PostgreSQL', 'Drizzle ORM'],
     links: [
@@ -151,40 +163,40 @@ const CHAPTERS = [
     ],
   },
   {
-    range: [0.712, 0.766],
-    label: 'Monument II · The Token Forge', title: 'REDCIRCLE',
-    plain: 'Social posts, transformed into tradable Solana tokens.',
+    range: [0.743, 0.790],
+    label: 'Monument II · The Watchtower', title: 'NOTIFYRR',
+    plain: 'AI-powered monitoring for any webpage.',
     points: [
-      'Built and launched a platform to tokenize Reddit and X posts as tradable SPL tokens on Solana — ~$3.2K in activity through the platform and token ecosystem after launch.',
-      'Developed the full stack including React/Next.js frontend, Node.js/Express backend, and PostgreSQL database.',
+      'Building an AI-powered website monitoring platform that tracks webpages and notifies users about price drops, ticket availability, and new jobs.',
+      'Uses Playwright and Gemini AI to understand webpages and user-defined goals and detect relevant changes automatically.',
     ],
-    stack: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'Solana'],
+    stack: ['Next.js', 'TypeScript', 'Playwright', 'Gemini', 'PostgreSQL'],
     links: [
-      { href: 'https://www.redcircle.lol/home', label: 'Live ↗', primary: true },
-      { href: 'https://github.com/Redcircle-lol/Redcircle_Web', label: 'GitHub ↗' },
+      { href: 'https://www.notifyr.xyz', label: 'Live ↗', primary: true },
+      { href: 'https://github.com/shubhamxcode/Notifyrr', label: 'GitHub ↗' },
     ],
   },
   {
-    range: [0.774, 0.832],
+    range: [0.798, 0.845],
     label: 'Monument III · The Review Spire', title: 'REVIEWIQ',
     plain: 'AI-powered code review for GitHub pull requests.',
     points: [
-      'Built an AI platform for GitHub PR analysis with code insights, refactoring suggestions, and automated issue detection.',
-      'Webhook-driven workflow with vector embeddings for context-aware PR analysis and automated static analysis.',
+      'Built an AI platform for GitHub Pull Request analysis with code insights, refactoring suggestions, and issue detection.',
+      'Implemented webhook-driven analysis with vector embeddings for context-aware PR reviews.',
     ],
-    stack: ['React', 'TypeScript', 'TanStack Router', 'Node.js', 'Express', 'PostgreSQL', 'Docker'],
+    stack: ['React', 'TypeScript', 'TanStack Router', 'Node.js', 'Express', 'PostgreSQL', 'Docker', 'AI API'],
     links: [
       { href: 'https://www.reviewiq.xyz', label: 'Live ↗', primary: true },
       { href: 'https://github.com/shubhamxcode/ReviewIQ', label: 'GitHub ↗' },
     ],
   },
   {
-    range: [0.840, 0.900],
+    range: [0.853, 0.900],
     label: 'Monument IV · The Observatory', title: 'SOUJI',
     plain: 'A Siri-style AI assistant for macOS — voice, vision, and automation.',
     points: [
-      'Voice control, LLM reasoning (Gemini), screen vision, natural-language Mac automation, and local-first memory.',
-      'Ships an autonomous job-application agent as a Chrome extension that ranks jobs against a résumé, generates tailored answers, and automates applications with a visible animated cursor.',
+      'Built a Siri-style AI assistant for macOS with voice control, screen vision, LLM reasoning, and Mac automation.',
+      'Shipped an autonomous job application agent that matches jobs to résumés, generates answers, and automates applications.',
     ],
     stack: ['Swift', 'Python', 'Chrome Extension (MV3)', 'Gemini API', 'Whisper'],
     links: [
@@ -493,8 +505,9 @@ function buildCareerStones(disposables) {
   const flames = [];
   const runes = [];
   [
-    { x: 4, z: -84, h: 3.8, year: '2024' },
-    { x: -4, z: -98, h: 5.2, year: '2025' },
+    { x: 4, z: -80, h: 3.4, year: '2024' },   // AshnaAI
+    { x: -4, z: -91, h: 4.5, year: '2025' },  // AdsFlicker
+    { x: 4, z: -102, h: 5.6, year: '2026' },  // RedCircle
   ].forEach(({ x, z, h, year }, i) => {
     const face = x > 0 ? -Math.PI / 2 : Math.PI / 2; // carving faces the trail
     mk(new THREE.BoxGeometry(2.4, 0.5, 1.9), stoneDark, x, 0.25, z);
@@ -515,10 +528,11 @@ function buildCareerStones(disposables) {
 
   // the golden career path — a glowing thread linking both chapters
   const pathCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 0.15, -73),
-    new THREE.Vector3(3.2, 0.15, -84),
-    new THREE.Vector3(-3.2, 0.15, -98),
-    new THREE.Vector3(0, 0.15, -109),
+    new THREE.Vector3(0, 0.15, -70),
+    new THREE.Vector3(3.2, 0.15, -80),
+    new THREE.Vector3(-3.2, 0.15, -91),
+    new THREE.Vector3(3.2, 0.15, -102),
+    new THREE.Vector3(0, 0.15, -110),
   ]);
   const pathGeo = new THREE.TubeGeometry(pathCurve, 48, 0.06, 5, false);
   const pathMat = new THREE.MeshBasicMaterial({ color: '#ffd27a', transparent: true, opacity: 0.55 });
@@ -565,14 +579,27 @@ function buildEmpire(disposables) {
   const coin = mk(new THREE.CylinderGeometry(0.55, 0.55, 0.12, 12), glowGold, exX + 1.5, TOP + 5.0, exZ);
   coin.rotation.x = Math.PI / 2;
 
-  /* Monument II — REDCIRCLE, the Token Forge (3, -127) */
-  const tfX = 3, tfZ = -127;
-  mk(new THREE.CylinderGeometry(1.8, 2.2, 3.8, 10), stone, tfX, TOP + 1.9, tfZ);
-  mk(new THREE.CylinderGeometry(2.25, 2.25, 0.45, 10), stoneDark, tfX, TOP + 3.95, tfZ);
-  const tokenRing = mk(new THREE.TorusGeometry(1.35, 0.16, 8, 24), gold, tfX, TOP + 5.5, tfZ + 0.15);
-  const token = mk(new THREE.CylinderGeometry(0.72, 0.72, 0.18, 16), glowGold, tfX, TOP + 5.5, tfZ + 0.15);
-  token.rotation.x = Math.PI / 2;
-  mk(new THREE.BoxGeometry(0.38, 0.65, 0.12), gold, tfX, TOP + 1.8, tfZ + 2.0);
+  /* Monument II — NOTIFYR, the Watchtower (3, -127) */
+  const wtX = 3, wtZ = -127;
+  mk(new THREE.CylinderGeometry(1.8, 2.2, 3.8, 10), stone, wtX, TOP + 1.9, wtZ);
+  mk(new THREE.CylinderGeometry(2.25, 2.25, 0.45, 10), stoneDark, wtX, TOP + 3.95, wtZ);
+  mk(new THREE.CylinderGeometry(0.95, 1.15, 0.5, 8), stone, wtX, TOP + 4.45, wtZ);   // lantern deck
+  const beacon = mk(new THREE.SphereGeometry(0.5, 12, 12), glowGold, wtX, TOP + 5.15, wtZ);
+  mk(new THREE.ConeGeometry(1.3, 0.85, 8), roof, wtX, TOP + 6.1, wtZ);               // cap over the lamp
+  mk(new THREE.BoxGeometry(0.38, 0.65, 0.12), gold, wtX, TOP + 1.8, wtZ + 2.0);      // door
+
+  // scan rings pulsing outward from the beacon, staggered
+  const scanGeo = new THREE.TorusGeometry(1, 0.055, 6, 30);
+  disposables.push(scanGeo);
+  const scanRings = [0, 1, 2].map((i) => {
+    const m = new THREE.MeshBasicMaterial({ color: '#ffd27a', transparent: true, opacity: 0.5, depthWrite: false });
+    disposables.push(m);
+    const r = new THREE.Mesh(scanGeo, m);
+    r.rotation.x = Math.PI / 2;
+    r.position.set(wtX, TOP + 5.15, wtZ);
+    g.add(r);
+    return { r, ph: i / 3 };
+  });
 
   /* Monument III — REVIEWIQ, the Review Spire (9, -121) */
   const rqX = 9, rqZ = -121;
@@ -595,7 +622,7 @@ function buildEmpire(disposables) {
   mk(new THREE.BoxGeometry(0.35, 0.6, 0.12), gold, obX, TOP + 1.6, obZ + 1.95); // door light
 
   // windows scattered on all monuments
-  [[exX - 1.5, exZ + 1.32, 1.4], [exX, exZ + 1.32, 1.8], [exX + 1.5, exZ + 1.32, 2.4], [tfX, tfZ + 1.9, 2.2], [rqX, rqZ + 1.9, 2.2], [rqX, rqZ + 1.9, 3.6], [obX, obZ + 1.9, 2.6]]
+  [[exX - 1.5, exZ + 1.32, 1.4], [exX, exZ + 1.32, 1.8], [exX + 1.5, exZ + 1.32, 2.4], [wtX, wtZ + 1.9, 2.2], [wtX, wtZ + 1.9, 3.3], [rqX, rqZ + 1.9, 2.2], [rqX, rqZ + 1.9, 3.6], [obX, obZ + 1.9, 2.6]]
     .forEach(([x, z, h]) => mk(new THREE.BoxGeometry(0.3, 0.42, 0.1), gold, x, TOP + h, z));
 
   const update = (t) => {
@@ -606,9 +633,12 @@ function buildEmpire(disposables) {
     reviewOrb.scale.setScalar(1 + Math.sin(t * 2.8) * 0.14);
     orb.scale.setScalar(1 + Math.sin(t * 2.4) * 0.12);
     coin.rotation.z = t * 0.8;
-    tokenRing.rotation.z = t * 0.45;
-    token.rotation.z = -t * 0.8;
-    token.position.y = TOP + 5.5 + Math.sin(t * 2.2) * 0.18;
+    beacon.scale.setScalar(0.9 + Math.sin(t * 3.4) * 0.16);
+    scanRings.forEach(({ r, ph }) => {
+      const u = (t * 0.45 + ph) % 1;
+      r.scale.setScalar(0.35 + u * 2.4);
+      r.material.opacity = 0.55 * (1 - u);
+    });
   };
   return { group: g, update };
 }
@@ -1173,7 +1203,7 @@ export default function Jungle() {
                 <ul className="space-y-1.5 mb-4 text-left">
                   {ch.points.map((pt, j) => (
                     <li key={j} className="flex gap-2 text-xs md:text-sm text-gray-200/85 leading-relaxed">
-                      <span className="text-[#ffe9a8] shrink-0">✦</span>{pt}
+                      <span className="text-[#ffe9a8] shrink-0">•</span>{pt}
                     </li>
                   ))}
                 </ul>
@@ -1190,7 +1220,7 @@ export default function Jungle() {
                 </div>
               )}
               {ch.level && (
-                <p className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50">✦ {ch.level}</p>
+                <p className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50">• {ch.level}</p>
               )}
 
               {ch.links && (
@@ -1225,7 +1255,7 @@ export default function Jungle() {
                     className="px-7 py-3 text-sm font-bold text-black rounded-full bg-[#ffe9a8] hover:bg-white transition-colors">
                     Hire Me
                   </a>
-                  <a href="/shubham%20varshney.pdf" download="Shubham-Varshney-Resume.pdf"
+                  <a href="/shubhamxcode.pdf" download="Shubham-Varshney-Resume.pdf"
                     className="px-7 py-3 text-sm font-semibold text-white rounded-full border border-white/30 hover:bg-white/10 transition-colors">
                     Resume
                   </a>
